@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
 
 * Студент: [Владимир Мазо](https://up.htmlacademy.ru/javascript/10/user/231833).
-* Наставник: [Дмитрий Харин] (https://htmlacademy.ru/profile/dihar).
+* Наставник: [Дмитрий Харин](https://htmlacademy.ru/profile/dihar).
 
 ---
 
