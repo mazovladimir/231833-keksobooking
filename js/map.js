@@ -1,31 +1,4 @@
 'use strict';
-/*
-
-{
-  "author": {
-    "avatar": строка, адрес изображения вида img/avatars/user{{xx}}.png, где xx это число от 1 до 8 с ведущим нулем. Например 01, 02 и т. д. Адреса изображений не повторяются
-  },
-
-  "offer": {
-    "title": ["Большая уютная квартира", "Маленькая неуютная квартира", "Огромный прекрасный дворец", "Маленький ужасный дворец", "Красивый гостевой домик", "Некрасивый негостеприимный домик", "Уютное бунгало далеко от моря", "Неуютное бунгало по колено в воде"];
-    "address": "{{location.x}}, {{location.y}}"
-    "price": getRandom(100000000, 1000);
-    "type": ['flat', 'house', 'bungalo'];
-    "rooms": getRandom(5, 1);
-    "guests": getRandom(100);
-    "checkin": ['12:00', '13:00', '14:00'];
-    "checkout": ['12:00', '13:00', '14:00'];
-    "features": ["wifi", "dishwasher", "parking", "washer", "elevator", "conditioner"],
-    "description": ' ',
-    "photos": []
-  },
-
-  "location": {
-    "x": ,
-    "y": 
-  }
-}
-*/
 
 var TYPE = ['flat', 'house', 'bungalo'];
 var CHECKIN = ['12:00', '13:00', '14:00'];
@@ -47,9 +20,13 @@ function getRandom(max, min) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+function getAvatar() {
+  return 'img/avatars/user' + '0' + getRandom(8, 1) + '.png';
+}
+
 function Ads() {
   this.author = {
-    avatar: 'string',
+    avatar: getAvatar(),
   };
   this.offer = {
     title: TITLE,
