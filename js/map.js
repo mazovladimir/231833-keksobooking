@@ -53,8 +53,9 @@ function Ads() {
 myads.forEach(function (ads) {
   var newElement = document.createElement('div');
   newElement.className = 'pin';
-  newElement.innerHTML = 'style="left: ' + ads.mylocation.x + 'px; top: ' + ads.mylocation.y + 'px"' + '<img src="' + ads.author.avatar + '" class="rounded" width="40" height="40">';
+  newElement.setAttribute('style', 'left: ' + ads.mylocation.x + 'px; top: ' + ads.mylocation.y + 'px');
+  newElement.innerHTML = '<img src="' + ads.author.avatar + '" class="rounded" width="40" height="40">';
   fragment.appendChild(newElement);
-})
+});
 
 document.querySelector(".tokyo__pin-map").appendChild(fragment);
