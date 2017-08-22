@@ -24,15 +24,7 @@ function getRandom(max, min) {
 }
 
 function getAvatar() {
-  return 'img/avatars/user' + '0' + getRandom(ADS_COUNT, 1) + '.png';
-}
-
-function getX() {
-  getRandom(900, 300);
-}
-
-function getY() {
-  getRandom(500, 100);
+  return 'img/avatars/user' + '0' + getRandom(ADS_COUNT - 1, 1) + '.png';
 }
 
 function Ads() {
@@ -53,16 +45,16 @@ function Ads() {
     photos: [],
   };
   this.mylocation = {
-    x: getX(),
-    y: getY(),
+    x: getRandom(900, 300),
+    y: getRandom(500, 100),
   };
-
-  myads.forEach(function (ads) {
-    var newElement = document.createElement('div');
-    newElement.className = 'pin';
-    newElement.innerHTML = 'style="left: {{ads.location.x}}px; top: {{ads.location.y}}px"' + '<img src="{{ads.author.avatar}}" class="rounded" width="40" height="40">';
-    fragment.appendChild(newElement);
-  }
-
-  document.querySelector('.tokyo__pin-map').appendChild(fragment);
 }
+
+myads.forEach(function (ads) {
+  var newElement = document.createElement('div');
+  newElement.className = 'pin';
+  newElement.innerHTML = 'style="left: ' + ads.mylocation.x + 'px; top: ' + ads.mylocation.y + 'px"' + '<img src="' + ads.author.avatar + '" class="rounded" width="40" height="40">';
+  fragment.appendChild(newElement);
+})
+
+document.querySelector(".tokyo__pin-map").appendChild(fragment);
