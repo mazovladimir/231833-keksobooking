@@ -60,6 +60,8 @@ var renderAds = function (ads) {
   return adsElement;
 };
 
+renderAds(0);
+
 myads.forEach(function (ads) {
   var newElement = document.createElement('div');
   newElement.className = 'pin';
