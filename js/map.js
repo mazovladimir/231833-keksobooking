@@ -9,7 +9,7 @@ var ADS_COUNT = 8;
 var GUESTS_COUNT = 100;
 
 var fragment = document.createDocumentFragment();
-var similarAdsTemplate = document.querySelector('#lodge-template').content;
+// var similarAdsTemplate = document.querySelector('#lodge-template').content;
 
 var myads = [];
 
@@ -53,14 +53,14 @@ function Ads() {
     y: getRandom(500, 100),
   };
 }
-
+/*
 var renderAds = function (ads) {
   var adsElement = similarAdsTemplate.cloneNode(true);
   adsElement.querySelector('.lodge__title').textContent = ads.offer.title[0];
   return adsElement;
 };
-
-renderAds(0);
+*/
+// renderAds(0);
 
 myads.forEach(function (ads) {
   var newElement = document.createElement('div');
