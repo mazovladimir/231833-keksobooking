@@ -9,6 +9,7 @@ var ADS_COUNT = 8;
 var GUESTS_COUNT = 100;
 
 var fragment = document.createDocumentFragment();
+var fragment2 = document.createDocumentFragment();
 var similarAdsTemplate = document.querySelector('#lodge-template').content;
 
 var myads = [];
@@ -44,7 +45,7 @@ function Ads() {
     guests: getRandom(GUESTS_COUNT),
     checkin: CHECKIN[getRandom(CHECKIN.length - 1)],
     checkout: CHECKOUT[getRandom(CHECKOUT.length - 1)],
-    features: FEATURES[getRandom(FEATURES.length - 1)],
+    features: FEATURES,
     description: '',
     photos: [],
   };
@@ -59,10 +60,15 @@ function getType(type) {
     return 'Квартира';
   } else if (type === 'house') {
     return 'Дом';
-  } else if (type === 'bungalo') {
-    return 'Бунгало';
   }
+  return 'Бунгало';
 }
+
+FEATURES.forEach(function (feature) {
+  var fElement = document.createElement('span');
+  fElement.className = 'feature__image feature__image--' + feature;
+  fragment2.appendChild(fElement);
+});
 
 var renderAds = function (ads) {
   var adsElement = similarAdsTemplate.cloneNode(true);
@@ -72,6 +78,7 @@ var renderAds = function (ads) {
   adsElement.querySelector('.lodge__type').textContent = getType(ads.offer.type);
   adsElement.querySelector('.lodge__rooms-and-guests').textContent = 'Для ' + ads.offer.guests + ' гостей в ' + ads.offer.rooms + ' комнатах';
   adsElement.querySelector('.lodge__checkin-time').textContent = 'Заезд после ' + ads.offer.checkin + ' , выезд до ' + ads.offer.checkout;
+  adsElement.querySelector('.lodge__features').appendChild(fragment2);
   adsElement.querySelector('.lodge__description').textContent = ads.offer.description;
   return adsElement;
 };
