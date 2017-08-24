@@ -11,6 +11,8 @@ var GUESTS_COUNT = 100;
 var fragment = document.createDocumentFragment();
 var fragment2 = document.createDocumentFragment();
 var similarAdsTemplate = document.querySelector('#lodge-template').content;
+var replace = document.querySelector('.dialog__panel');
+var parentDiv = replace.parentNode;
 
 var myads = [];
 
@@ -91,6 +93,6 @@ myads.forEach(function (ads) {
   fragment.appendChild(newElement);
 });
 
+parentDiv.replaceChild(renderAds(myads[4]), replace);
 document.querySelector('.dialog__title').querySelector('img').src = myads[4].author.avatar;
-document.querySelector('.dialog__panel').appendChild(renderAds(myads[4]));
 document.querySelector('.tokyo__pin-map').appendChild(fragment);
