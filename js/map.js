@@ -42,7 +42,7 @@ function Ads() {
     price: getRandom(1000000, 1000),
     type: TYPE[getRandom(TYPE.length - 1)],
     rooms: getRandom(5, 1),
-    guests: getRandom(GUESTS_COUNT),
+    guests: getRandom(GUESTS_COUNT, 1),
     checkin: CHECKIN[getRandom(CHECKIN.length - 1)],
     checkout: CHECKOUT[getRandom(CHECKOUT.length - 1)],
     features: FEATURES,
@@ -91,5 +91,6 @@ myads.forEach(function (ads) {
   fragment.appendChild(newElement);
 });
 
-document.querySelector('.dialog__panel').appendChild(renderAds(myads[0]));
+document.querySelector('.dialog__title').querySelector('img').src = myads[4].author.avatar;
+document.querySelector('.dialog__panel').appendChild(renderAds(myads[4]));
 document.querySelector('.tokyo__pin-map').appendChild(fragment);
