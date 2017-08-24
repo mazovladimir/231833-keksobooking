@@ -8,18 +8,16 @@ var TITLE = ['Большая уютная квартира', 'Маленькая
 var ADS_COUNT = 8;
 var GUESTS_COUNT = 100;
 
-var fragment = document.createDocumentFragment();
-var fragment2 = document.createDocumentFragment();
-var similarAdsTemplate = document.querySelector('#lodge-template').content;
-var replace = document.querySelector('.dialog__panel');
-var parentDiv = replace.parentNode;
+var fragmentAds = document.createDocumentFragment();
+var fragmentFeature = document.createDocumentFragment();
+var adsTemplate = document.querySelector('#lodge-template').content;
+var replaceAds = document.querySelector('.dialog__panel');
+var parentAds = replaceAds.parentNode;
 
 var myads = [];
 
 for (var i = 0; i < ADS_COUNT; i++) {
   myads[i] = new Ads();
-  myads[i].author.avatar = getAvatar(i + 1);
-  myads[i].offer.title = TITLE[i];
   myads[i].offer.address = myads[i].mylocation.x + ',' + myads[i].mylocation.y;
 }
 
@@ -36,10 +34,10 @@ function getAvatar(element) {
 
 function Ads() {
   this.author = {
-    avatar: '',
+    avatar: getAvatar(i + 1),
   };
   this.offer = {
-    title: '',
+    title: TITLE.splice(getRandom(TITLE.length - 1), 1),
     address: '',
     price: getRandom(1000000, 1000),
     type: TYPE[getRandom(TYPE.length - 1)],
@@ -58,29 +56,34 @@ function Ads() {
 }
 
 function getType(type) {
-  if (type === 'flat') {
-    return 'Квартира';
-  } else if (type === 'house') {
-    return 'Дом';
-  }
-  return 'Бунгало';
+  switch (type) {
+    case 'flat':
+      return 'Квартира';
+      break;
+    case 'house':
+      return 'Дом';
+      break;
+    case 'bungalo':
+      return 'Бунгало';
+      break;
+  };
 }
 
 FEATURES.forEach(function (feature) {
   var fElement = document.createElement('span');
   fElement.className = 'feature__image feature__image--' + feature;
-  fragment2.appendChild(fElement);
+  fragmentFeature.appendChild(fElement);
 });
 
 var renderAds = function (ads) {
-  var adsElement = similarAdsTemplate.cloneNode(true);
+  var adsElement = adsTemplate.cloneNode(true);
   adsElement.querySelector('.lodge__title').textContent = ads.offer.title;
   adsElement.querySelector('.lodge__address').textContent = ads.offer.address;
   adsElement.querySelector('.lodge__price').textContent = ads.offer.price + '\u20BD/\u043D\u043E\u0447\u044C';
   adsElement.querySelector('.lodge__type').textContent = getType(ads.offer.type);
   adsElement.querySelector('.lodge__rooms-and-guests').textContent = 'Для ' + ads.offer.guests + ' гостей в ' + ads.offer.rooms + ' комнатах';
   adsElement.querySelector('.lodge__checkin-time').textContent = 'Заезд после ' + ads.offer.checkin + ' , выезд до ' + ads.offer.checkout;
-  adsElement.querySelector('.lodge__features').appendChild(fragment2);
+  adsElement.querySelector('.lodge__features').appendChild(fragmentFeature);
   adsElement.querySelector('.lodge__description').textContent = ads.offer.description;
   return adsElement;
 };
@@ -90,9 +93,9 @@ myads.forEach(function (ads) {
   newElement.className = 'pin';
   newElement.setAttribute('style', 'left: ' + ads.mylocation.x + 'px; top: ' + ads.mylocation.y + 'px');
   newElement.innerHTML = '<img src="' + ads.author.avatar + '" class="rounded" width="40" height="40">';
-  fragment.appendChild(newElement);
+  fragmentAds.appendChild(newElement);
 });
 
-parentDiv.replaceChild(renderAds(myads[4]), replace);
+parentAds.replaceChild(renderAds(myads[4]), replaceAds);
 document.querySelector('.dialog__title').querySelector('img').src = myads[4].author.avatar;
-document.querySelector('.tokyo__pin-map').appendChild(fragment);
+document.querySelector('.tokyo__pin-map').appendChild(fragmentAds);
