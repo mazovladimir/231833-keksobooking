@@ -8,17 +8,17 @@ var TITLE = ['Большая уютная квартира', 'Маленькая
 var ADS_COUNT = 8;
 var GUESTS_COUNT = 100;
 
-var fragmentAds = document.createDocumentFragment();
+var fragmentAd = document.createDocumentFragment();
 var fragmentFeature = document.createDocumentFragment();
 var adsTemplate = document.querySelector('#lodge-template').content;
-var replaceAds = document.querySelector('.dialog__panel');
-var parentAds = replaceAds.parentNode;
+var replaceAd = document.querySelector('.dialog__panel');
+var parentAd = replaceAd.parentNode;
 
 var myads = [];
 
 for (var i = 0; i < ADS_COUNT; i++) {
-  myads[i] = new Ads();
-  myads[i].offer.address = myads[i].mylocation.x + ',' + myads[i].mylocation.y;
+  myads[i] = new Ad();
+//  myads[i].offer.address = myads[i].mylocation.x + ',' + myads[i].mylocation.y;
 }
 
 function getRandom(max, min) {
@@ -32,13 +32,13 @@ function getAvatar(element) {
   return 'img/avatars/user' + '0' + element + '.png';
 }
 
-function Ads() {
+function Ad() {
   this.author = {
     avatar: getAvatar(i + 1),
   };
   this.offer = {
     title: TITLE.splice(getRandom(TITLE.length - 1), 1),
-    address: '',
+    address: function() { return _this.mylocation.x + ',' + _this.mylocation.y},
     price: getRandom(1000000, 1000),
     type: TYPE[getRandom(TYPE.length - 1)],
     rooms: getRandom(5, 1),
@@ -62,10 +62,8 @@ function getType(type) {
       break;
     case 'house':
       return 'Дом';
-      break;
     case 'bungalo':
       return 'Бунгало';
-      break;
   };
 }
 
@@ -75,7 +73,7 @@ FEATURES.forEach(function (feature) {
   fragmentFeature.appendChild(fElement);
 });
 
-var renderAds = function (ads) {
+var renderAd = function (ads) {
   var adsElement = adsTemplate.cloneNode(true);
   adsElement.querySelector('.lodge__title').textContent = ads.offer.title;
   adsElement.querySelector('.lodge__address').textContent = ads.offer.address;
@@ -93,9 +91,9 @@ myads.forEach(function (ads) {
   newElement.className = 'pin';
   newElement.setAttribute('style', 'left: ' + ads.mylocation.x + 'px; top: ' + ads.mylocation.y + 'px');
   newElement.innerHTML = '<img src="' + ads.author.avatar + '" class="rounded" width="40" height="40">';
-  fragmentAds.appendChild(newElement);
+  fragmentAd.appendChild(newElement);
 });
 
-parentAds.replaceChild(renderAds(myads[4]), replaceAds);
+parentAd.replaceChild(renderAd(myads[4]), replaceAd);
 document.querySelector('.dialog__title').querySelector('img').src = myads[4].author.avatar;
-document.querySelector('.tokyo__pin-map').appendChild(fragmentAds);
+document.querySelector('.tokyo__pin-map').appendChild(fragmentAd);
