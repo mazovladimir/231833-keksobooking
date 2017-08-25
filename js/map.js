@@ -14,11 +14,12 @@ var adsTemplate = document.querySelector('#lodge-template').content;
 var replaceAd = document.querySelector('.dialog__panel');
 var parentAd = replaceAd.parentNode;
 
+var mytype;
 var myads = [];
 
 for (var i = 0; i < ADS_COUNT; i++) {
   myads[i] = new Ad();
-//  myads[i].offer.address = myads[i].mylocation.x + ',' + myads[i].mylocation.y;
+  myads[i].offer.address = myads[i].mylocation.x + ',' + myads[i].mylocation.y;
 }
 
 function getRandom(max, min) {
@@ -38,7 +39,7 @@ function Ad() {
   };
   this.offer = {
     title: TITLE.splice(getRandom(TITLE.length - 1), 1),
-    address: function() { return _this.mylocation.x + ',' + _this.mylocation.y},
+    address: '',
     price: getRandom(1000000, 1000),
     type: TYPE[getRandom(TYPE.length - 1)],
     rooms: getRandom(5, 1),
@@ -58,13 +59,16 @@ function Ad() {
 function getType(type) {
   switch (type) {
     case 'flat':
-      return 'Квартира';
+      mytype = 'Квартира';
       break;
     case 'house':
-      return 'Дом';
+      mytype = 'Дом';
+      break;
     case 'bungalo':
-      return 'Бунгало';
-  };
+      mytype = 'Бунгало';
+      break;
+  }
+  return mytype;
 }
 
 FEATURES.forEach(function (feature) {
