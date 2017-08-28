@@ -45,7 +45,7 @@ function Ad() {
     guests: getRandom(GUESTS_COUNT, 1),
     checkin: CHECKIN[getRandom(CHECKIN.length - 1)],
     checkout: CHECKOUT[getRandom(CHECKOUT.length - 1)],
-    features: FEATURES,
+    features: getFeatures(getRandom(FEATURES.length, 1)),
     description: '',
     photos: [],
   };
@@ -53,6 +53,14 @@ function Ad() {
     x: getRandom(900, 300),
     y: getRandom(500, 100),
   };
+}
+
+function getFeatures(count) {
+  var arrayFeatures = [];
+  for (var x = 0; x < count; x++) {
+    arrayFeatures.push(FEATURES[getRandom(FEATURES.length - 1)]);
+  }
+  return arrayFeatures;
 }
 
 function getType(type) {
@@ -64,6 +72,7 @@ function getType(type) {
     case 'bungalo':
       return 'Бунгало';
   }
+  return '';
 }
 
 var renderAd = function (ad) {
