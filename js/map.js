@@ -17,7 +17,7 @@ var parentAd = replaceAd.parentNode;
 var myads = [];
 
 for (var i = 0; i < ADS_COUNT; i++) {
-  myads[i] = new Ad();
+  myads[i] = new Ad(i);
   myads[i].offer.address = myads[i].mylocation.x + ',' + myads[i].mylocation.y;
 }
 
