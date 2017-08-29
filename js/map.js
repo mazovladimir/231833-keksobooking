@@ -18,7 +18,6 @@ var myads = [];
 
 for (var i = 0; i < ADS_COUNT; i++) {
   myads[i] = new Ad(i);
-  myads[i].offer.address = myads[i].mylocation.x + ',' + myads[i].mylocation.y;
 }
 
 function getRandom(max, min) {
@@ -36,9 +35,13 @@ function Ad() {
   this.author = {
     avatar: getAvatar(i + 1),
   };
+  this.location = {
+    x: getRandom(900, 300),
+    y: getRandom(500, 100),
+  };
   this.offer = {
     title: TITLES[getRandom(TITLES.length - 1)],
-    address: '',
+    address: this.location.x + ',' + this.location.y,
     price: getRandom(1000000, 1000),
     type: TYPES[getRandom(TYPES.length - 1)],
     rooms: getRandom(5, 1),
@@ -48,10 +51,6 @@ function Ad() {
     features: getFeatures(getRandom(FEATURES.length, 1)),
     description: '',
     photos: [],
-  };
-  this.mylocation = {
-    x: getRandom(900, 300),
-    y: getRandom(500, 100),
   };
 }
 
@@ -97,7 +96,7 @@ function getAdFragment(ads) {
   ads.forEach(function (ad) {
     var newElement = document.createElement('div');
     newElement.className = 'pin';
-    newElement.setAttribute('style', 'left: ' + ad.mylocation.x + 'px; top: ' + ad.mylocation.y + 'px');
+    newElement.setAttribute('style', 'left: ' + ad.location.x + 'px; top: ' + ad.location.y + 'px');
     newElement.innerHTML = '<img src="' + ad.author.avatar + '" class="rounded" width="40" height="40">';
     fragmentAd.appendChild(newElement);
   });
