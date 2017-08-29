@@ -15,7 +15,7 @@ var parentAd = replaceAd.parentNode;
 var myads = [];
 
 for (var i = 0; i < 8; i++) {
-  myads[i] = new Ad(i);
+  myads[i] = new Ad();
 }
 
 function getRandom(max, min) {
