@@ -5,8 +5,6 @@ var CHECKIN = ['12:00', '13:00', '14:00'];
 var CHECKOUT = ['12:00', '13:00', '14:00'];
 var FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
 var TITLES = ['Большая уютная квартира', 'Маленькая неуютная квартира', 'Огромный прекрасный дворец', 'Маленький ужасный дворец', 'Красивый гостевой домик', 'Некрасивый негостеприимный домик', 'Уютное бунгало далеко от моря', 'Неуютное бунгало по колено в воде'];
-var ADS_COUNT = 8;
-var GUESTS_COUNT = 100;
 
 var fragmentAd = document.createDocumentFragment();
 var fragmentFeature = document.createDocumentFragment();
@@ -16,7 +14,7 @@ var parentAd = replaceAd.parentNode;
 
 var myads = [];
 
-for (var i = 0; i < ADS_COUNT; i++) {
+for (var i = 0; i < 8; i++) {
   myads[i] = new Ad(i);
 }
 
@@ -45,7 +43,7 @@ function Ad() {
     price: getRandom(1000000, 1000),
     type: TYPES[getRandom(TYPES.length - 1)],
     rooms: getRandom(5, 1),
-    guests: getRandom(GUESTS_COUNT, 1),
+    guests: getRandom(100, 1),
     checkin: CHECKIN[getRandom(CHECKIN.length - 1)],
     checkout: CHECKOUT[getRandom(CHECKOUT.length - 1)],
     features: getFeatures(getRandom(FEATURES.length, 1)),
