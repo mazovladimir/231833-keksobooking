@@ -12,7 +12,7 @@ var parentAd = replaceAd.parentNode;
 var myads = [];
 
 for (var i = 0; i < 8; i++) {
-  myads[i] = new Ad();
+  myads[i] = new Ad(i);
 }
 
 function getRandom(max, min) {
@@ -22,20 +22,20 @@ function getRandom(max, min) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-function getAvatar(i) {
-  return  'img/avatars/user0' + i + '.png';
+function getAvatar(avatarNumber) {
+  return 'img/avatars/user0' + avatarNumber + '.png';
 }
 
-function Ad() {
+function Ad(avatar) {
   this.author = {
-    avatar: getAvatar(i + 1),
+    avatar: getAvatar(avatar + 1),
   };
   this.location = {
     x: getRandom(900, 300),
     y: getRandom(500, 100),
   };
   this.offer = {
-    title: getRandomArray(TITLES, 1, 1),
+    title: getRandomArray(TITLES, 1, 2),
     address: this.location.x + ', ' + this.location.y,
     price: getRandom(1000000, 1000),
     type: TYPES[getRandom(TYPES.length - 1)],
@@ -43,7 +43,7 @@ function Ad() {
     guests: getRandom(100, 1),
     checkin: CHECKIN[getRandom(CHECKIN.length - 1)],
     checkout: CHECKOUT[getRandom(CHECKOUT.length - 1)],
-    features: getRandomArray(FEATURES, 1, 4),
+    features: getRandomArray(FEATURES),
     description: '',
     photos: [],
   };
