@@ -28,7 +28,7 @@ function getAvatar(i) {
 
 function Ad() {
   this.author = {
-    avatar: getAvatar(i),
+    avatar: getAvatar(i + 1),
   };
   this.location = {
     x: getRandom(900, 300),
