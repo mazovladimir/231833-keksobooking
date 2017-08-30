@@ -6,9 +6,6 @@ var CHECKOUT = ['12:00', '13:00', '14:00'];
 var FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
 var TITLES = ['Большая уютная квартира', 'Маленькая неуютная квартира', 'Огромный прекрасный дворец', 'Маленький ужасный дворец', 'Красивый гостевой домик', 'Некрасивый негостеприимный домик', 'Уютное бунгало далеко от моря', 'Неуютное бунгало по колено в воде'];
 
-var fragmentAd = document.createDocumentFragment();
-var fragmentFeature = document.createDocumentFragment();
-var adsTemplate = document.querySelector('#lodge-template').content;
 var replaceAd = document.querySelector('.dialog__panel');
 var parentAd = replaceAd.parentNode;
 
@@ -25,39 +22,54 @@ function getRandom(max, min) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-function getAvatar(element) {
-  return 'img/avatars/user' + '0' + element + '.png';
+function getAvatar(i) {
+  return  'img/avatars/user0' + i + '.png';
 }
 
 function Ad() {
   this.author = {
-    avatar: getAvatar(i + 1),
+    avatar: getAvatar(i),
   };
   this.location = {
     x: getRandom(900, 300),
     y: getRandom(500, 100),
   };
   this.offer = {
-    title: TITLES[getRandom(TITLES.length - 1)],
-    address: this.location.x + ',' + this.location.y,
+    title: getRandomArray(TITLES, 1, 1),
+    address: this.location.x + ', ' + this.location.y,
     price: getRandom(1000000, 1000),
     type: TYPES[getRandom(TYPES.length - 1)],
     rooms: getRandom(5, 1),
     guests: getRandom(100, 1),
     checkin: CHECKIN[getRandom(CHECKIN.length - 1)],
     checkout: CHECKOUT[getRandom(CHECKOUT.length - 1)],
-    features: getFeatures(getRandom(FEATURES.length, 1)),
+    features: getRandomArray(FEATURES, 1, 4),
     description: '',
     photos: [],
   };
 }
 
-function getFeatures(count) {
-  var arrayFeatures = [];
-  for (var x = 0; x < count; x++) {
-    arrayFeatures.push(FEATURES[getRandom(FEATURES.length - 1)]);
+function suffleFunc() {
+  var rand = getRandom(1);
+  return rand || -1;
+}
+
+function getRandomArray(array, minCount, maxCount) {
+  if (typeof minCount === 'undefined') {
+    minCount = array.length;
   }
-  return arrayFeatures;
+  if (typeof maxCount === 'undefined') {
+    maxCount = array.length;
+  }
+  var count = getRandom(maxCount, minCount);
+  var randomMap = [];
+  for (var x = 0; x < array.length; x++) {
+    randomMap.push(x < count);
+  }
+  randomMap = randomMap.filter(suffleFunc);
+  return array.filter(function (el, y) {
+    return randomMap[y];
+  }).sort(suffleFunc);
 }
 
 function getType(type) {
@@ -73,6 +85,8 @@ function getType(type) {
 }
 
 var renderAd = function (ad) {
+  var fragmentFeature = document.createDocumentFragment();
+  var adsTemplate = document.querySelector('#lodge-template').content;
   FEATURES.forEach(function (feature) {
     var fElement = document.createElement('span');
     fElement.className = 'feature__image feature__image--' + feature;
@@ -91,6 +105,7 @@ var renderAd = function (ad) {
 };
 
 function getAdFragment(ads) {
+  var fragmentAd = document.createDocumentFragment();
   ads.forEach(function (ad) {
     var newElement = document.createElement('div');
     newElement.className = 'pin';
