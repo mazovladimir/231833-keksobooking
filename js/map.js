@@ -10,9 +10,11 @@ var replaceAd = document.querySelector('.dialog__panel');
 var parentAd = replaceAd.parentNode;
 
 var myads = [];
+var shuffleAvatars = getRandomArray(getAvatar());
+var shuffleTitles = getRandomArray(TITLES);
 
 for (var i = 0; i < 8; i++) {
-  myads[i] = new Ad(i);
+  myads[i] = new Ad(shuffleAvatars, shuffleTitles);
 }
 
 function getRandom(max, min) {
@@ -22,20 +24,24 @@ function getRandom(max, min) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-function getAvatar(avatarNumber) {
-  return 'img/avatars/user0' + avatarNumber + '.png';
+function getAvatar() {
+  var avatars = [];
+  for (var avatarNumber = 1; avatarNumber < 9; avatarNumber++) {
+    avatars.push('img/avatars/user0' + avatarNumber + '.png');
+  }
+  return avatars;
 }
 
-function Ad(avatar) {
+function Ad(avatar, title) {
   this.author = {
-    avatar: getAvatar(avatar + 1),
+    avatar: avatar.splice(0, 1),
   };
   this.location = {
     x: getRandom(900, 300),
     y: getRandom(500, 100),
   };
   this.offer = {
-    title: getRandomArray(TITLES, 1, 2),
+    title: title.splice(0, 1),
     address: this.location.x + ', ' + this.location.y,
     price: getRandom(1000000, 1000),
     type: TYPES[getRandom(TYPES.length - 1)],
