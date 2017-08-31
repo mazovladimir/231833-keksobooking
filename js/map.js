@@ -73,7 +73,7 @@ function getRandomArray(array, minCount, maxCount) {
     randomMap.push(x < count);
   }
   randomMap = randomMap.filter(suffleFunc);
-  return array.filter(function (el, y) {
+  return array.filter(function (el, y) { // eslint-disable-line no-unused-vars
     return randomMap[y];
   }).sort(suffleFunc);
 }
