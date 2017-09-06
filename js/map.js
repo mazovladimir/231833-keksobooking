@@ -7,6 +7,36 @@
   var FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
   var TITLES = ['Большая уютная квартира', 'Маленькая неуютная квартира', 'Огромный прекрасный дворец', 'Маленький ужасный дворец', 'Красивый гостевой домик', 'Некрасивый негостеприимный домик', 'Уютное бунгало далеко от моря', 'Неуютное бунгало по колено в воде'];
 
+  var ESC_KEYCODE = 27;
+  var ENTER_KEYCODE = 13;
+
+  var tokioPinMap = document.querySelector('.tokyo__pin-map');
+  var dialog = document.querySelector('.dialog');
+  var dialogClose = document.querySelector('.dialog__close');
+
+  tokioPinMap.addEventListener('click', function (evt) {
+    var target = evt.target;
+    var pinActive = document.querySelector('.pin--active');
+    if (target.parentNode.classList.contains('pin')) {
+      target.parentNode.classList.add('pin--active');
+      pinActive.classList.remove('pin--active');
+    }
+  });
+
+  dialogClose.addEventListener('click', function () {
+    var pinActive = document.querySelector('.pin--active');
+    dialog.style.visibility = 'hidden';
+    pinActive.classList.remove('pin--active');
+  });
+
+  dialogClose.addEventListener('keydown', function (evt) {
+    if (evt.keyCode === ESC_KEYCODE) {
+      var pinActive = document.querySelector('.pin--active');
+      dialog.style.visibility = 'hidden';
+      pinActive.classList.remove('pin--active');
+    }
+  });
+
   function getRandom(max, min) {
     if (typeof min === 'undefined') {
       min = 0;
