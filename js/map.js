@@ -29,11 +29,22 @@
     pinActive.classList.remove('pin--active');
   });
 
-  dialogClose.addEventListener('keydown', function (evt) {
+  document.addEventListener('keydown', function (evt) {
     if (evt.keyCode === ESC_KEYCODE) {
       var pinActive = document.querySelector('.pin--active');
       dialog.style.visibility = 'hidden';
       pinActive.classList.remove('pin--active');
+    }
+  });
+
+  dialogClose.addEventListener('keydown', function (evt) {
+    if (evt.keyCode === ENTER_KEYCODE) {
+      var target = evt.target;
+      var pinActive = document.querySelector('.pin--active');
+      if (target.parentNode.classList.contains('pin')) {
+        target.parentNode.classList.add('pin--active');
+        pinActive.classList.remove('pin--active');
+      }
     }
   });
 
