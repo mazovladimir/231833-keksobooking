@@ -34,6 +34,15 @@
     }
   });
 
+  function changeDialog(target) {
+    myAds.forEach(function (item) {
+      if (target.querySelector('img') === item.author.avatar) {
+        var replaceAd = document.querySelector('.dialog__panel');
+        replaceAd.parentNode.replaceChild(renderAd(item), replaceAd);
+      }
+    });
+  }
+
   function movePin(evt) {
     var target = evt.target;
     var pinActive = document.querySelector('.pin--active');
@@ -45,6 +54,7 @@
       }
       pinActive.classList.remove('pin--active');
     }
+    changeDialog(target);
   }
 
   function closeDialog() {
@@ -118,7 +128,7 @@
     for (var x = 0; x < array.length; x++) {
       randomMap.push(x < count);
     }
-    randomMap = randomMap.filter(suffleFunc);
+    randomMap = randomMap.sort(suffleFunc);
     return array.filter(function (el, y) { // eslint-disable-line no-unused-vars
       return randomMap[y];
     }).sort(suffleFunc);
