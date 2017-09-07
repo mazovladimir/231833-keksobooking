@@ -41,12 +41,16 @@
     }
   });
 
-  dialogClose.addEventListener('keydown', function (evt) {
+  document.addEventListener('keydown', function (evt) {
     if (evt.keyCode === ENTER_KEYCODE) {
       var target = evt.target;
       var pinActive = document.querySelector('.pin--active');
-      if (target.parentNode.classList.contains('pin')) {
+      if ((target.parentNode.classList.contains('pin')) && (target.parentNode !== pinActive)) {
         target.parentNode.classList.add('pin--active');
+        document.querySelector('.dialog__title').querySelector('img').src = target.src;
+        if (dialog.style.visibility === 'hidden') {
+          dialog.style.visibility = '';
+        }
         pinActive.classList.remove('pin--active');
       }
     }
@@ -161,7 +165,7 @@
       var newElement = document.createElement('div');
       newElement.className = 'pin';
       newElement.setAttribute('style', 'left: ' + ad.location.x + 'px; top: ' + ad.location.y + 'px');
-      newElement.innerHTML = '<img src="' + ad.author.avatar + '" class="rounded" width="40" height="40">';
+      newElement.innerHTML = '<img src="' + ad.author.avatar + '" class="rounded" width="40" height="40" tabindex="0">';
       fragmentAd.appendChild(newElement);
     });
     return fragmentAd;
