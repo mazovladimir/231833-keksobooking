@@ -17,8 +17,12 @@
   tokioPinMap.addEventListener('click', function (evt) {
     var target = evt.target;
     var pinActive = document.querySelector('.pin--active');
-    if (target.parentNode.classList.contains('pin')) {
+    if ((target.parentNode.classList.contains('pin')) && (target.parentNode !== pinActive)) {
       target.parentNode.classList.add('pin--active');
+      document.querySelector('.dialog__title').querySelector('img').src = target.src;
+      if (dialog.style.visibility === 'hidden') {
+        dialog.style.visibility = '';
+      }
       pinActive.classList.remove('pin--active');
     }
   });
