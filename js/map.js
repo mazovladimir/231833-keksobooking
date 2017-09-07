@@ -12,9 +12,29 @@
 
   var tokioPinMap = document.querySelector('.tokyo__pin-map');
   var dialog = document.querySelector('.dialog');
-  var dialogClose = document.querySelector('.dialog__close');
+  var dialogClose = dialog.querySelector('.dialog__close');
 
   tokioPinMap.addEventListener('click', function (evt) {
+    movePin(evt);
+  });
+
+  dialogClose.addEventListener('click', function () {
+    closeDialog();
+  });
+
+  document.addEventListener('keydown', function (evt) {
+    if (evt.keyCode === ESC_KEYCODE) {
+      closeDialog();
+    }
+  });
+
+  document.addEventListener('keydown', function (evt) {
+    if (evt.keyCode === ENTER_KEYCODE) {
+      movePin(evt);
+    }
+  });
+
+  function movePin(evt) {
     var target = evt.target;
     var pinActive = document.querySelector('.pin--active');
     if ((target.parentNode.classList.contains('pin')) && (target.parentNode !== pinActive)) {
@@ -25,36 +45,13 @@
       }
       pinActive.classList.remove('pin--active');
     }
-  });
+  }
 
-  dialogClose.addEventListener('click', function () {
+  function closeDialog() {
     var pinActive = document.querySelector('.pin--active');
     dialog.style.visibility = 'hidden';
     pinActive.classList.remove('pin--active');
-  });
-
-  document.addEventListener('keydown', function (evt) {
-    if (evt.keyCode === ESC_KEYCODE) {
-      var pinActive = document.querySelector('.pin--active');
-      dialog.style.visibility = 'hidden';
-      pinActive.classList.remove('pin--active');
-    }
-  });
-
-  document.addEventListener('keydown', function (evt) {
-    if (evt.keyCode === ENTER_KEYCODE) {
-      var target = evt.target;
-      var pinActive = document.querySelector('.pin--active');
-      if ((target.parentNode.classList.contains('pin')) && (target.parentNode !== pinActive)) {
-        target.parentNode.classList.add('pin--active');
-        document.querySelector('.dialog__title').querySelector('img').src = target.src;
-        if (dialog.style.visibility === 'hidden') {
-          dialog.style.visibility = '';
-        }
-        pinActive.classList.remove('pin--active');
-      }
-    }
-  });
+  }
 
   function getRandom(max, min) {
     if (typeof min === 'undefined') {
