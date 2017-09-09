@@ -34,18 +34,10 @@
     }
   });
 
-  function changeDialog(target) {
-    myAds.forEach(function (item) {
-      if (target.querySelector('img') === item.author.avatar) {
-        var replaceAd = document.querySelector('.dialog__panel');
-        replaceAd.parentNode.replaceChild(renderAd(item), replaceAd);
-      }
-    });
-  }
-
   function movePin(evt) {
     var target = evt.target;
     var pinActive = document.querySelector('.pin--active');
+    var getArrayId = pinActive.getAttribute('id');
     if ((target.parentNode.classList.contains('pin')) && (target.parentNode !== pinActive)) {
       target.parentNode.classList.add('pin--active');
       document.querySelector('.dialog__title').querySelector('img').src = target.src;
@@ -54,7 +46,8 @@
       }
       pinActive.classList.remove('pin--active');
     }
-    changeDialog(target);
+    var replaceAd = document.querySelector('.dialog__panel');
+    replaceAd.parentNode.replaceChild(renderAd(myAds[getArrayId]), replaceAd);
   }
 
   function closeDialog() {
@@ -168,11 +161,15 @@
 
   function getAdFragment(ads) {
     var fragmentAd = document.createDocumentFragment();
-    ads.forEach(function (ad) {
+    ads.forEach(function (ad, index) {
       var newElement = document.createElement('div');
       newElement.className = 'pin';
       newElement.setAttribute('style', 'left: ' + ad.location.x + 'px; top: ' + ad.location.y + 'px');
       newElement.innerHTML = '<img src="' + ad.author.avatar + '" class="rounded" width="40" height="40" tabindex="0">';
+      newElement.setAttribute('id', index);
+      if (index === 0) {
+        newElement.classList.add('pin--active');
+      }
       fragmentAd.appendChild(newElement);
     });
     return fragmentAd;
