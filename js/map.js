@@ -13,6 +13,7 @@
   var tokioPinMap = document.querySelector('.tokyo__pin-map');
   var dialog = document.querySelector('.dialog');
   var dialogClose = dialog.querySelector('.dialog__close');
+  var replaceAd = document.querySelector('.dialog__panel');
 
   tokioPinMap.addEventListener('click', function (evt) {
     movePin(evt);
@@ -35,19 +36,28 @@
   });
 
   function movePin(evt) {
-    var target = evt.target;
-    var pinActive = document.querySelector('.pin--active');
-    var getArrayId = pinActive.getAttribute('id');
-    if ((target.parentNode.classList.contains('pin')) && (target.parentNode !== pinActive)) {
-      target.parentNode.classList.add('pin--active');
-      document.querySelector('.dialog__title').querySelector('img').src = target.src;
-      if (dialog.style.visibility === 'hidden') {
-        dialog.style.visibility = '';
-      }
-      pinActive.classList.remove('pin--active');
+    var targetPinId = evt.target.parentNode.getAttribute('id');
+    var pins = document.querySelectorAll('.pin');
+    if (document.querySelector('.pin--active') !== null) {
+      var activePinId = document.querySelector('.pin--active').getAttribute('id');
     }
-    var replaceAd = document.querySelector('.dialog__panel');
-    replaceAd.parentNode.replaceChild(renderAd(myAds[getArrayId]), replaceAd);
+    pins.forEach(function (element) {
+      if (element.id === targetPinId) {
+        element.classList.add('pin--active');
+      }
+      if ((element.id === activePinId) && (activePinId !== 'undefined')) {
+        element.classList.remove('pin--active');
+      }
+    });
+    document.querySelector('.dialog__title').querySelector('img').src = evt.target.src;
+    if (dialog.style.visibility === 'hidden') {
+      dialog.style.visibility = '';
+    }
+    replaceAd.parentNode.replaceChild(renderAd(myAds[targetPinId]), replaceAd);
+  }
+
+  function setPinActive() {
+    
   }
 
   function closeDialog() {
@@ -175,9 +185,7 @@
     return fragmentAd;
   }
 
-  var replaceAd = document.querySelector('.dialog__panel');
   var myAds = createAds(8);
-  replaceAd.parentNode.replaceChild(renderAd(myAds[0]), replaceAd);
   document.querySelector('.dialog__title').querySelector('img').src = myAds[0].author.avatar;
   document.querySelector('.tokyo__pin-map').appendChild(getAdFragment(myAds));
 })();
