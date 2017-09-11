@@ -38,7 +38,7 @@
 
   function movePin(evt) {
     var targetPin = evt.target;
-    if (targetPin.parentNode.classList.contains('pin') && !targetPin.parentNode.classList.contains('pin--active')) {
+    if (targetPin.parentNode.classList.contains('pin') && !targetPin.parentNode.classList.contains('pin--active') && !targetPin.parentNode.classList.contains('pin__main')) {
       var pinNodes = Array.prototype.slice.call(document.querySelectorAll('.pin')).filter(function (pin) {
         return !pin.classList.contains('pin__main');
       });
