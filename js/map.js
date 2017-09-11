@@ -1,6 +1,6 @@
 'use strict';
 
-(function () {
+//(function () {
   var TYPES = ['flat', 'house', 'bungalo'];
   var CHECKIN = ['12:00', '13:00', '14:00'];
   var CHECKOUT = ['12:00', '13:00', '14:00'];
@@ -14,6 +14,8 @@
   var dialog = document.querySelector('.dialog');
   var dialogClose = dialog.querySelector('.dialog__close');
   var replaceAd = document.querySelector('.dialog__panel');
+  var pinNodes = document.querySelectorAll('.pin');
+  var dialogTitle = document.querySelector('.dialog__title');
 
   tokioPinMap.addEventListener('click', function (evt) {
     movePin(evt);
@@ -35,35 +37,33 @@
     }
   });
 
-  function movePin(evt) {
-    var targetPinId = evt.target.parentNode.getAttribute('id');
-    var pins = document.querySelectorAll('.pin');
-    if (document.querySelector('.pin--active') !== null) {
-      var activePinId = document.querySelector('.pin--active').getAttribute('id');
-    }
-    pins.forEach(function (element) {
-      if (element.id === targetPinId) {
-        element.classList.add('pin--active');
-      }
-      if ((element.id === activePinId) && (activePinId !== 'undefined')) {
-        element.classList.remove('pin--active');
-      }
-    });
-    document.querySelector('.dialog__title').querySelector('img').src = evt.target.src;
-    if (dialog.style.visibility === 'hidden') {
+  function movePin (evt) {
+    pinNodes = document.querySelectorAll('.pin');
+    var targetPin = evt.target;
+    var targetId = targetPin.parentNode.getAttribute('id');
+    pinNodes[targetId].classList.add('pin--active');
+    if (dialog.style.visibility !== 'hidden') {
+      var activePin = document.querySelector('.pin--active');
+      var activeId = activePin.getAttribute('id');
+      pinNodes[activeId].classList.remove('pin--active');
+    } else {
       dialog.style.visibility = '';
     }
-    replaceAd.parentNode.replaceChild(renderAd(myAds[targetPinId]), replaceAd);
-  }
-
-  function setPinActive() {
-    
-  }
+    dialogTitle.querySelector('img').src = targetPin.src;
+    replaceAd.parentNode.replaceChild(renderAd(myAds[0]), replaceAd);
+  };
 
   function closeDialog() {
     var pinActive = document.querySelector('.pin--active');
     dialog.style.visibility = 'hidden';
     pinActive.classList.remove('pin--active');
+  }
+
+  function setPinId() {
+    pinNodes = document.querySelectorAll('.pin');
+    pinNodes.forEach(function (item, index) {
+      item.setAttribute('id', index);
+    });
   }
 
   function getRandom(max, min) {
@@ -176,7 +176,6 @@
       newElement.className = 'pin';
       newElement.setAttribute('style', 'left: ' + ad.location.x + 'px; top: ' + ad.location.y + 'px');
       newElement.innerHTML = '<img src="' + ad.author.avatar + '" class="rounded" width="40" height="40" tabindex="0">';
-      newElement.setAttribute('id', index);
       if (index === 0) {
         newElement.classList.add('pin--active');
       }
@@ -184,8 +183,10 @@
     });
     return fragmentAd;
   }
-
+  
   var myAds = createAds(8);
+  replaceAd.parentNode.replaceChild(renderAd(myAds[0]), replaceAd);
   document.querySelector('.dialog__title').querySelector('img').src = myAds[0].author.avatar;
   document.querySelector('.tokyo__pin-map').appendChild(getAdFragment(myAds));
-})();
+  setPinId();
+//})();
