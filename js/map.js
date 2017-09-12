@@ -1,6 +1,6 @@
 'use strict';
 
-//(function () {
+(function () {
   var TYPES = ['flat', 'house', 'bungalo'];
   var CHECKIN = ['12:00', '13:00', '14:00'];
   var CHECKOUT = ['12:00', '13:00', '14:00'];
@@ -196,4 +196,4 @@
   replaceAd.parentNode.replaceChild(renderAd(myAds[0]), replaceAd);
   document.querySelector('.dialog__title').querySelector('img').src = myAds[0].author.avatar;
   document.querySelector('.tokyo__pin-map').appendChild(getAdFragment(myAds));
-//})();
+})();
