@@ -41,7 +41,7 @@
     if (targetPin.parentNode.classList.contains('pin')) {
       if (dialog.style.visibility !== 'hidden') {
         var activePin = myAds.find(function (item) {
-            return item.isActive === true;
+          return item.isActive === true;
         });
         var activeId = activePin.id;
         pinNodes[activeId].classList.remove('pin--active');
