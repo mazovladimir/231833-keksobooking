@@ -15,6 +15,9 @@
   var dialogClose = dialog.querySelector('.dialog__close');
   var replaceAd = document.querySelector('.dialog__panel');
   var dialogTitle = document.querySelector('.dialog__title');
+  var pinNodes = Array.prototype.slice.call(document.querySelectorAll('.pin')).filter(function (pin) {
+    return !pin.classList.contains('pin__main');
+  });
 
   tokioPinMap.addEventListener('click', function (evt) {
     movePin(evt);
@@ -39,13 +42,10 @@
   function movePin(evt) {
     var targetPin = evt.target;
     if (targetPin.parentNode.classList.contains('pin') && !targetPin.parentNode.classList.contains('pin--active') && !targetPin.parentNode.classList.contains('pin__main')) {
-      var pinNodes = Array.prototype.slice.call(document.querySelectorAll('.pin')).filter(function (pin) {
-        return !pin.classList.contains('pin__main');
-      });
-      var targetId = targetPin.parentNode.getAttribute('id');
+      var targetId = targetPin.parentNode.dataset.id;
       if (dialog.style.visibility !== 'hidden') {
         var activePin = document.querySelector('.pin--active');
-        var activeId = activePin.getAttribute('id');
+        var activeId = activePin.dataset.id;
         pinNodes[activeId].classList.remove('pin--active');
       } else {
         dialog.style.visibility = '';
@@ -173,7 +173,7 @@
       newElement.className = 'pin';
       newElement.setAttribute('style', 'left: ' + ad.location.x + 'px; top: ' + ad.location.y + 'px');
       newElement.innerHTML = '<img src="' + ad.author.avatar + '" class="rounded" width="40" height="40" tabindex="0">';
-      newElement.setAttribute('id', index);
+      newElement.dataset.id = index;
       if (index === 0) {
         newElement.classList.add('pin--active');
       }
