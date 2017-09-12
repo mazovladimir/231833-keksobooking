@@ -38,16 +38,16 @@
 
   function movePin(evt) {
     var targetPin = evt.target;
+    var targetId = targetPin.parentNode.dataset.id;
     var activePin = myAds.find(getActivePin);
-    if (targetPin.parentNode.classList.contains('pin')) {
-      if (activePin !== null && activePin !== 'undefined') {
+    if (targetId) {
+      if (activePin) {
         var activeId = activePin.id;
-        pinNodes[activeId].classList.remove('pin--active');
         myAds[activeId].isActive = false;
+        pinNodes[activeId].classList.remove('pin--active');
       } else {
         dialog.style.visibility = '';
       }
-      var targetId = targetPin.parentNode.dataset.id;
       myAds[targetId].isActive = true;
       pinNodes[targetId].classList.add('pin--active');
       dialogTitle.querySelector('img').src = targetPin.src;
