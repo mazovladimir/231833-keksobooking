@@ -42,9 +42,7 @@
     var activePin = myAds.find(getActivePin);
     if (targetId) {
       if (activePin) {
-        var activeId = activePin.id;
-        myAds[activeId].isActive = false;
-        pinNodes[activeId].classList.remove('pin--active');
+        removePinActive();
       } else {
         dialog.style.visibility = '';
       }
@@ -57,10 +55,15 @@
   }
 
   function closeDialog() {
-    var activePin = myAds.find(getActivePin);
     dialog.style.visibility = 'hidden';
-    pinNodes[activePin.id].classList.remove('pin--active');
-    myAds[activePin.id].isActive = false;
+    removePinActive();
+  }
+
+  function removePinActive() {
+    var activeId = myAds.find(getActivePin).id;
+    myAds[activeId].isActive = false;
+    pinNodes[activeId].classList.remove('pin--active');
+    return;
   }
 
   function getActivePin(item) {
