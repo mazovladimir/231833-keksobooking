@@ -38,9 +38,9 @@
 
   function movePin(evt) {
     var targetPin = evt.target;
+    var activePin = myAds.find(getActivePin);
     if (targetPin.parentNode.classList.contains('pin')) {
-      if (dialog.style.visibility !== 'hidden') {
-        var activePin = myAds.find(getActivePin);
+      if (activePin !== null && activePin !== 'undefined') {
         var activeId = activePin.id;
         pinNodes[activeId].classList.remove('pin--active');
         myAds[activeId].isActive = false;
