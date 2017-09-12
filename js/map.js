@@ -64,6 +64,7 @@
     });
     dialog.style.visibility = 'hidden';
     pinNodes[activePin.id].classList.remove('pin--active');
+    myAds[activePin.id].isActive = false;
   }
 
   function getRandom(max, min) {
