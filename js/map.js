@@ -1,6 +1,6 @@
 'use strict';
 
-(function () {
+//(function () {
   var TYPES = ['flat', 'house', 'bungalo'];
   var CHECKIN = ['12:00', '13:00', '14:00'];
   var CHECKOUT = ['12:00', '13:00', '14:00'];
@@ -13,11 +13,8 @@
   var tokioPinMap = document.querySelector('.tokyo__pin-map');
   var dialog = document.querySelector('.dialog');
   var dialogClose = dialog.querySelector('.dialog__close');
-  var replaceAd = document.querySelector('.dialog__panel');
   var dialogTitle = document.querySelector('.dialog__title');
-  var pinNodes = Array.prototype.slice.call(document.querySelectorAll('.pin')).filter(function (pin) {
-    return !pin.classList.contains('pin__main');
-  });
+  var pinNodes = [];
 
   tokioPinMap.addEventListener('click', function (evt) {
     movePin(evt);
@@ -41,15 +38,19 @@
 
   function movePin(evt) {
     var targetPin = evt.target;
-    if (targetPin.parentNode.classList.contains('pin') && !targetPin.parentNode.classList.contains('pin--active') && !targetPin.parentNode.classList.contains('pin__main')) {
-      var targetId = targetPin.parentNode.dataset.id;
+    if (targetPin.parentNode.classList.contains('pin')) {
       if (dialog.style.visibility !== 'hidden') {
-        var activePin = document.querySelector('.pin--active');
-        var activeId = activePin.dataset.id;
+        var activePin = myAds.find(function (item) {
+            return item.isActive === true;
+        });
+        var activeId = activePin.id;
         pinNodes[activeId].classList.remove('pin--active');
+        myAds[activeId].isActive = false;
       } else {
         dialog.style.visibility = '';
       }
+      var targetId = targetPin.parentNode.dataset.id;
+      myAds[targetId].isActive = true;
       pinNodes[targetId].classList.add('pin--active');
       dialogTitle.querySelector('img').src = targetPin.src;
       replaceAd = document.querySelector('.dialog__panel');
@@ -58,9 +59,11 @@
   }
 
   function closeDialog() {
-    var pinActive = document.querySelector('.pin--active');
+    var activePin = myAds.find(function (item) {
+      return item.isActive === true;
+    });
     dialog.style.visibility = 'hidden';
-    pinActive.classList.remove('pin--active');
+    pinNodes[activePin.id].classList.remove('pin--active');
   }
 
   function getRandom(max, min) {
@@ -75,7 +78,7 @@
     var shuffleTitles = getRandomArray(TITLES);
     var ads = [];
     for (var i = 0; i < count; i++) {
-      ads.push(new Ad(shuffleAvatars.splice(0, 1), shuffleTitles.splice(0, 1)));
+      ads.push(new Ad(i, shuffleAvatars.splice(0, 1), shuffleTitles.splice(0, 1)));
     }
     return ads;
   }
@@ -88,7 +91,9 @@
     return avatars;
   }
 
-  function Ad(avatar, title) {
+  function Ad(id, avatar, title) {
+    this.id = id;
+    this.isActive = false;
     this.author = {
       avatar: avatar,
     };
@@ -171,11 +176,14 @@
     ads.forEach(function (ad, index) {
       var newElement = document.createElement('div');
       newElement.className = 'pin';
-      newElement.setAttribute('style', 'left: ' + ad.location.x + 'px; top: ' + ad.location.y + 'px');
+      newElement.style.left = ad.location.x + 'px';
+      newElement.style.top = ad.location.y + 'px';
       newElement.innerHTML = '<img src="' + ad.author.avatar + '" class="rounded" width="40" height="40" tabindex="0">';
       newElement.dataset.id = index;
+      pinNodes.push(newElement);
       if (index === 0) {
         newElement.classList.add('pin--active');
+        ad.isActive = true;
       }
       fragmentAd.appendChild(newElement);
     });
@@ -183,7 +191,8 @@
   }
 
   var myAds = createAds(8);
+  var replaceAd = document.querySelector('.dialog__panel');
   replaceAd.parentNode.replaceChild(renderAd(myAds[0]), replaceAd);
   document.querySelector('.dialog__title').querySelector('img').src = myAds[0].author.avatar;
   document.querySelector('.tokyo__pin-map').appendChild(getAdFragment(myAds));
-})();
+//})();
