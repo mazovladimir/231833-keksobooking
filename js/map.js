@@ -40,9 +40,7 @@
     var targetPin = evt.target;
     if (targetPin.parentNode.classList.contains('pin')) {
       if (dialog.style.visibility !== 'hidden') {
-        var activePin = myAds.find(function (item) {
-          return item.isActive === true;
-        });
+        var activePin = myAds.find(getActivePin);
         var activeId = activePin.id;
         pinNodes[activeId].classList.remove('pin--active');
         myAds[activeId].isActive = false;
@@ -59,12 +57,14 @@
   }
 
   function closeDialog() {
-    var activePin = myAds.find(function (item) {
-      return item.isActive === true;
-    });
+    var activePin = myAds.find(getActivePin);
     dialog.style.visibility = 'hidden';
     pinNodes[activePin.id].classList.remove('pin--active');
     myAds[activePin.id].isActive = false;
+  }
+
+  function getActivePin(item) {
+    return item.isActive === true;
   }
 
   function getRandom(max, min) {
