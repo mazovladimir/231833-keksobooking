@@ -48,8 +48,7 @@
       }
       myAds[targetId].isActive = true;
       pinNodes[targetId].classList.add('pin--active');
-      dialogTitle.querySelector('img').src = targetPin.src;
-      changeDialog(targetId);
+      changeDialog(targetPin, targetId);
     }
   }
 
@@ -64,9 +63,9 @@
     pinNodes[activeId].classList.remove('pin--active');
   }
 
-  function changeDialog(targetId) {
-    replaceAd = document.querySelector('.dialog__panel');
-    replaceAd.parentNode.replaceChild(renderAd(myAds[targetId]), replaceAd);
+  function changeDialog(targetPin, targetId) {
+    dialogTitle.querySelector('img').src = targetPin.src;
+    replacePinDialog(myAds[targetId]);
   }
 
   function getActivePin(item) {
@@ -197,9 +196,13 @@
     return fragmentAd;
   }
 
+  function replacePinDialog(myAd) {
+    var replaceAd = document.querySelector('.dialog__panel');
+    replaceAd.parentNode.replaceChild(renderAd(myAd), replaceAd);
+  }
+
   var myAds = createAds(8);
-  var replaceAd = document.querySelector('.dialog__panel');
-  replaceAd.parentNode.replaceChild(renderAd(myAds[0]), replaceAd);
+  replacePinDialog(myAds[0]);
   document.querySelector('.dialog__title').querySelector('img').src = myAds[0].author.avatar;
   document.querySelector('.tokyo__pin-map').appendChild(getAdFragment(myAds));
 })();
