@@ -49,8 +49,7 @@
       myAds[targetId].isActive = true;
       pinNodes[targetId].classList.add('pin--active');
       dialogTitle.querySelector('img').src = targetPin.src;
-      replaceAd = document.querySelector('.dialog__panel');
-      replaceAd.parentNode.replaceChild(renderAd(myAds[targetId]), replaceAd);
+      changeDialog(targetId);
     }
   }
 
@@ -63,7 +62,11 @@
     var activeId = myAds.find(getActivePin).id;
     myAds[activeId].isActive = false;
     pinNodes[activeId].classList.remove('pin--active');
-    return;
+  }
+
+  function changeDialog(targetId) {
+    replaceAd = document.querySelector('.dialog__panel');
+    replaceAd.parentNode.replaceChild(renderAd(myAds[targetId]), replaceAd);
   }
 
   function getActivePin(item) {
