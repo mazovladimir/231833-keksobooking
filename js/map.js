@@ -1,6 +1,6 @@
 'use strict';
 
-(function () {
+//(function () {
   var TYPES = ['flat', 'house', 'bungalo'];
   var CHECKIN = ['12:00', '13:00', '14:00'];
   var CHECKOUT = ['12:00', '13:00', '14:00'];
@@ -35,6 +35,31 @@
       movePin(evt);
     }
   });
+
+  var typeForm = document.querySelector('#type');
+  typeForm.addEventListener('change', function (evt) {
+    var priceField = document.querySelector('#price');
+    for (var i = 0; i < typeForm.options.length; i++) {
+      var option = typeForm.options[i];
+      if(option.selected) {
+        switch (option.value) {
+          case 'flat':
+            priceField.value = 1000;
+            return;
+          case 'bungalo':
+            priceField.value = 0;
+            return;
+          case 'house':
+            priceField.value = 5000;
+            return;
+          case 'palace':
+            priceField.value = 10000;
+            return;
+        }
+      }
+    }
+  });
+
 
   function movePin(evt) {
     var targetPin = evt.target;
@@ -205,4 +230,4 @@
   replacePinDialog(myAds[0]);
   document.querySelector('.dialog__title').querySelector('img').src = myAds[0].author.avatar;
   document.querySelector('.tokyo__pin-map').appendChild(getAdFragment(myAds));
-})();
+//})();
