@@ -7,6 +7,71 @@
   var FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
   var TITLES = ['Большая уютная квартира', 'Маленькая неуютная квартира', 'Огромный прекрасный дворец', 'Маленький ужасный дворец', 'Красивый гостевой домик', 'Некрасивый негостеприимный домик', 'Уютное бунгало далеко от моря', 'Неуютное бунгало по колено в воде'];
 
+  var ESC_KEYCODE = 27;
+  var ENTER_KEYCODE = 13;
+
+  var tokioPinMap = document.querySelector('.tokyo__pin-map');
+  var dialog = document.querySelector('.dialog');
+  var dialogClose = dialog.querySelector('.dialog__close');
+  var dialogTitle = document.querySelector('.dialog__title');
+  var pinNodes = [];
+
+  tokioPinMap.addEventListener('click', function (evt) {
+    movePin(evt);
+  });
+
+  dialogClose.addEventListener('click', function () {
+    closeDialog();
+  });
+
+  document.addEventListener('keydown', function (evt) {
+    if (evt.keyCode === ESC_KEYCODE) {
+      closeDialog();
+    }
+  });
+
+  document.addEventListener('keydown', function (evt) {
+    if (evt.keyCode === ENTER_KEYCODE) {
+      movePin(evt);
+    }
+  });
+
+  function movePin(evt) {
+    var targetPin = evt.target;
+    var targetId = targetPin.parentNode.dataset.id;
+    var activePin = myAds.find(getActivePin);
+    if (targetId) {
+      if (activePin) {
+        removePinActive();
+      } else {
+        dialog.style.visibility = '';
+      }
+      myAds[targetId].isActive = true;
+      pinNodes[targetId].classList.add('pin--active');
+      changeDialog(targetPin, targetId);
+    }
+  }
+
+  function closeDialog() {
+    dialog.style.visibility = 'hidden';
+    removePinActive();
+  }
+
+  function removePinActive() {
+    var activeId = myAds.find(getActivePin).id;
+    myAds[activeId].isActive = false;
+    pinNodes[activeId].classList.remove('pin--active');
+  }
+
+  function changeDialog(targetPin, targetId) {
+    dialogTitle.querySelector('img').src = targetPin.src;
+    replacePinDialog(myAds[targetId]);
+  }
+
+  function getActivePin(item) {
+    return item.isActive === true;
+  }
+
   function getRandom(max, min) {
     if (typeof min === 'undefined') {
       min = 0;
@@ -19,7 +84,7 @@
     var shuffleTitles = getRandomArray(TITLES);
     var ads = [];
     for (var i = 0; i < count; i++) {
-      ads.push(new Ad(shuffleAvatars.splice(0, 1), shuffleTitles.splice(0, 1)));
+      ads.push(new Ad(i, shuffleAvatars.splice(0, 1), shuffleTitles.splice(0, 1)));
     }
     return ads;
   }
@@ -32,7 +97,9 @@
     return avatars;
   }
 
-  function Ad(avatar, title) {
+  function Ad(id, avatar, title) {
+    this.id = id;
+    this.isActive = false;
     this.author = {
       avatar: avatar,
     };
@@ -72,7 +139,7 @@
     for (var x = 0; x < array.length; x++) {
       randomMap.push(x < count);
     }
-    randomMap = randomMap.filter(suffleFunc);
+    randomMap = randomMap.sort(suffleFunc);
     return array.filter(function (el, y) { // eslint-disable-line no-unused-vars
       return randomMap[y];
     }).sort(suffleFunc);
@@ -112,19 +179,30 @@
 
   function getAdFragment(ads) {
     var fragmentAd = document.createDocumentFragment();
-    ads.forEach(function (ad) {
+    ads.forEach(function (ad, index) {
       var newElement = document.createElement('div');
       newElement.className = 'pin';
-      newElement.setAttribute('style', 'left: ' + ad.location.x + 'px; top: ' + ad.location.y + 'px');
-      newElement.innerHTML = '<img src="' + ad.author.avatar + '" class="rounded" width="40" height="40">';
+      newElement.style.left = ad.location.x + 'px';
+      newElement.style.top = ad.location.y + 'px';
+      newElement.innerHTML = '<img src="' + ad.author.avatar + '" class="rounded" width="40" height="40" tabindex="0">';
+      newElement.dataset.id = index;
+      pinNodes.push(newElement);
+      if (index === 0) {
+        newElement.classList.add('pin--active');
+        ad.isActive = true;
+      }
       fragmentAd.appendChild(newElement);
     });
     return fragmentAd;
   }
 
-  var replaceAd = document.querySelector('.dialog__panel');
+  function replacePinDialog(myAd) {
+    var replaceAd = document.querySelector('.dialog__panel');
+    replaceAd.parentNode.replaceChild(renderAd(myAd), replaceAd);
+  }
+
   var myAds = createAds(8);
-  replaceAd.parentNode.replaceChild(renderAd(myAds[0]), replaceAd);
+  replacePinDialog(myAds[0]);
   document.querySelector('.dialog__title').querySelector('img').src = myAds[0].author.avatar;
   document.querySelector('.tokyo__pin-map').appendChild(getAdFragment(myAds));
 })();
