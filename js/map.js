@@ -14,6 +14,10 @@
   var dialog = document.querySelector('.dialog');
   var dialogClose = dialog.querySelector('.dialog__close');
   var dialogTitle = document.querySelector('.dialog__title');
+  var typeSelectField = document.querySelector('#type');
+  var roomNumberField = document.querySelector('#room_number');
+  var timeIn = document.querySelector('#timein');
+  var timeOut = document.querySelector('#timeout');
   var pinNodes = [];
 
   tokioPinMap.addEventListener('click', function (evt) {
@@ -36,24 +40,74 @@
     }
   });
 
-  var typeForm = document.querySelector('#type');
-  typeForm.addEventListener('change', function (evt) {
-    var priceField = document.querySelector('#price');
-    for (var i = 0; i < typeForm.options.length; i++) {
-      var option = typeForm.options[i];
+  timeIn.addEventListener('change', function (evt) {
+    for (var i = 0; i < timeIn.options.length; i++) {
+      var timeInOption = timeIn.options[i];
+      if (timeInOption.selected) {
+        for (var j = 0; j < timeOut.options.length; j++) {
+          var timeOutOption = timeOut.options[i];
+          if (timeInOption.value === timeOutOption.value) {
+            timeOutOption.selected = true;
+          }
+        }
+      }
+    }
+  })
+
+  timeOut.addEventListener('change', function (evt) {
+    for (var i = 0; i < timeOut.options.length; i++) {
+      var timeOutOption = timeOut.options[i];
+      if (timeOutOption.selected) {
+        for (var j = 0; j < timeIn.options.length; j++) {
+          var timeInOption = timeIn.options[i];
+          if (timeOutOption.value === timeInOption.value) {
+            timeInOption.selected = true;
+          }
+        }
+      }
+    }
+  })
+
+  roomNumberField.addEventListener('change', function (evt) {
+    var selectCapacityField = document.querySelector('#capacity');
+    for (var i = 0; i < roomNumberField.options.length; i++) {
+      var option = roomNumberField.options[i];
       if(option.selected) {
         switch (option.value) {
           case 'flat':
-            priceField.value = 1000;
+            selectCapacityField.value = 1000;
             return;
           case 'bungalo':
-            priceField.value = 0;
+            selectCapacityField.value = 0;
             return;
           case 'house':
-            priceField.value = 5000;
+            selectCapacityField.value = 5000;
             return;
           case 'palace':
-            priceField.value = 10000;
+            selectCapacityField.value = 10000;
+            return;
+        }
+      }
+    }
+  });
+
+  typeSelectField.addEventListener('change', function (evt) {
+    var priceTextField = document.querySelector('#price');
+    for (var i = 0; i < typeSelectField.options.length; i++) {
+      var option = typeSelectField.options[i];
+      if(option.selected) {
+        switch (option.value) {
+          case 'flat':
+            priceTextField.value = 1000;
+            return;
+          case 'bungalo':
+            priceTextField.value = 0;
+            return;
+          case 'house':
+            priceTextField.value = 5000;
+            return;
+          case 'palace':
+            priceTextField.value = 10000;
             return;
         }
       }
