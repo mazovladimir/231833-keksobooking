@@ -1,6 +1,6 @@
 'use strict';
 
-//(function () {
+(function () {
   var TYPES = ['flat', 'house', 'bungalo'];
   var CHECKIN = ['12:00', '13:00', '14:00'];
   var CHECKOUT = ['12:00', '13:00', '14:00'];
@@ -15,7 +15,7 @@
   var dialogClose = dialog.querySelector('.dialog__close');
   var dialogTitle = document.querySelector('.dialog__title');
   var typeSelect = document.querySelector('#type');
-  var roomNumberField = document.querySelector('#room_number');
+  var numberSelect = document.querySelector('#room_number');
   var roomCapacityField = document.querySelector('#capacity');
   var timeIn = document.querySelector('#timein');
   var timeOut = document.querySelector('#timeout');
@@ -62,40 +62,36 @@
     }
   });
 
-  roomNumberField.addEventListener('change', function () {
-    for (var i = 0; i < roomNumberField.options.length; i++) {
-      optionNumber = roomNumberField.options[i];
-      if (optionNumber.selected) {
-        switch (optionNumber.value) {
-          case '1':
-            var arraySwitchNumber = ['1']
-            switchNumber(arraySwitchNumber);
-            return;
-          case '2':
-            for (var j = 0; j < roomCapacityField.options.length; j++) {
-              optionCapacity = roomCapacityField.options[j];
-              if (optionCapacity.value !== '1' && optionCapacity.value !== '2') {
-                optionCapacity.disabled = true;
-              } else {
-                optionCapacity.disabled = false;
-              }
-            }
-            return;
-          case '3':
-            for (var j = 0; j < roomCapacityField.options.length; j++) {
-              optionCapacity = roomCapacityField.options[j];
-              if (optionCapacity.value !== '1' && optionCapacity.value !== '2' && optionCapacity.value !== '3') {
-                optionCapacity.disabled = true;
-              } else {
-                optionCapacity.disabled = false;
-              }
-            }
-            return;
-          case '100':
-            switchNumber('0');
-            return;
+  numberSelect.addEventListener('change', function () {
+    numberSelected = numberSelect.options[numberSelect.selectedIndex].value;
+    switch (numberSelected) {
+      case '1':
+        var arraySwitchNumber = ['1'];
+        switchNumber(arraySwitchNumber);
+        return;
+      case '2':
+        for (var j = 0; j < roomCapacityField.options.length; j++) {
+          optionCapacity = roomCapacityField.options[j];
+          if (optionCapacity.value !== '1' && optionCapacity.value !== '2') {
+            optionCapacity.disabled = true;
+          } else {
+            optionCapacity.disabled = false;
+          }
         }
-      }
+        return;
+      case '3':
+        for (var j = 0; j < roomCapacityField.options.length; j++) {
+          optionCapacity = roomCapacityField.options[j];
+          if (optionCapacity.value !== '1' && optionCapacity.value !== '2' && optionCapacity.value !== '3') {
+            optionCapacity.disabled = true;
+          } else {
+            optionCapacity.disabled = false;
+          }
+        }
+        return;
+      case '100':
+        switchNumber('0');
+        return;
     }
   });
 
@@ -112,20 +108,20 @@
 
   typeSelect.addEventListener('change', function () {
     var getSelectedType = typeSelect.options[typeSelect.selectedIndex].value;
-      switch (getSelectedType) {
-        case 'flat':
-          priceSelect.value = 1000;
-          return;
-        case 'bungalo':
-          priceSelect.value = 0;
-          return;
-        case 'house':
-          priceSelect.value = 5000;
-          return;
-        case 'palace':
-          priceSelect.value = 10000;
-          return;
-      }
+    switch (getSelectedType) {
+      case 'flat':
+        priceSelect.value = 1000;
+        return;
+      case 'bungalo':
+        priceSelect.value = 0;
+        return;
+      case 'house':
+        priceSelect.value = 5000;
+        return;
+      case 'palace':
+        priceSelect.value = 10000;
+        return;
+    }
   });
 
 
@@ -298,4 +294,4 @@
   replacePinDialog(myAds[0]);
   document.querySelector('.dialog__title').querySelector('img').src = myAds[0].author.avatar;
   document.querySelector('.tokyo__pin-map').appendChild(getAdFragment(myAds));
-//})();
+})();
