@@ -45,23 +45,22 @@
   });
 
   timeIn.addEventListener('change', function () {
-    changeTime();
-  });
-
-  timeOut.addEventListener('change', function () {
-    timeIn = document.querySelector('#timeout');
-    timeOut = document.querySelector('#timein');
-    changeTime(timeIn, timeOut);
-  });
-
-  function changeTime() {
     var timeInSelected = timeIn.options[timeIn.selectedIndex].value;
     for (var i = 0; i < timeOut.options.length; i++) {
       if (timeInSelected === timeOut.options[i].value) {
         timeOut.options[i].selected = true;
       }
     }
-  }
+  });
+
+  timeOut.addEventListener('change', function () {
+    var timeOutSelected = timeOut.options[timeOut.selectedIndex].value;
+    for (var i = 0; i < timeIn.options.length; i++) {
+      if (timeOutSelected === timeIn.options[i].value) {
+        timeIn.options[i].selected = true;
+      }
+    }
+  });
 
   roomNumberField.addEventListener('change', function () {
     for (var i = 0; i < roomNumberField.options.length; i++) {
