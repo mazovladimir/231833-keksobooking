@@ -24,6 +24,10 @@
   var optionCapacity;
   var optionNumber;
 
+  getRoomType();
+  getTimeInSelect();
+  getTimeOutSelect();
+
   tokioPinMap.addEventListener('click', function (evt) {
     movePin(evt);
   });
@@ -45,29 +49,18 @@
   });
 
   timeIn.addEventListener('change', function () {
-    var timeInSelected = timeIn.options[timeIn.selectedIndex].value;
-    for (var i = 0; i < timeOut.options.length; i++) {
-      if (timeInSelected === timeOut.options[i].value) {
-        timeOut.options[i].selected = true;
-      }
-    }
+    getTimeInSelect();
   });
 
   timeOut.addEventListener('change', function () {
-    var timeOutSelected = timeOut.options[timeOut.selectedIndex].value;
-    for (var i = 0; i < timeIn.options.length; i++) {
-      if (timeOutSelected === timeIn.options[i].value) {
-        timeIn.options[i].selected = true;
-      }
-    }
+    getTimeOutSelect();
   });
 
   numberSelect.addEventListener('change', function () {
-    numberSelected = numberSelect.options[numberSelect.selectedIndex].value;
+    var numberSelected = numberSelect.options[numberSelect.selectedIndex].value;
     switch (numberSelected) {
       case '1':
-        var arraySwitchNumber = ['1'];
-        switchNumber(arraySwitchNumber);
+        switchNumber('1');
         return;
       case '2':
         for (var j = 0; j < roomCapacityField.options.length; j++) {
@@ -107,6 +100,28 @@
   }
 
   typeSelect.addEventListener('change', function () {
+    getRoomType();
+  });
+
+  function getTimeInSelect() {
+    var timeInSelected = timeIn.options[timeIn.selectedIndex].value;
+    for (var i = 0; i < timeOut.options.length; i++) {
+      if (timeInSelected === timeOut.options[i].value) {
+        timeOut.options[i].selected = true;
+      }
+    }
+  }
+
+  function getTimeOutSelect() {
+    var timeOutSelected = timeOut.options[timeOut.selectedIndex].value;
+    for (var i = 0; i < timeIn.options.length; i++) {
+      if (timeOutSelected === timeIn.options[i].value) {
+        timeIn.options[i].selected = true;
+      }
+    }
+  }
+
+  function getRoomType() {
     var getSelectedType = typeSelect.options[typeSelect.selectedIndex].value;
     switch (getSelectedType) {
       case 'flat':
@@ -122,7 +137,7 @@
         priceSelect.value = 10000;
         return;
     }
-  });
+  }
 
 
   function movePin(evt) {
