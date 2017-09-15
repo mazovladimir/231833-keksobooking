@@ -70,7 +70,7 @@
       switch (numberSelected.value) {
         case '1':
           disableRoomCapacity('1');
-          return;
+          break;
         case '2':
           for (var j = 0; j < numberCapacity.options.length; j++) {
             optionCapacity = numberCapacity.options[j];
@@ -81,7 +81,7 @@
               optionCapacity.selected = true;
             }
           }
-          return;
+          break;
         case '3':
           for (var k = 0; k < numberCapacity.options.length; k++) {
             optionCapacity = numberCapacity.options[k];
@@ -92,10 +92,10 @@
               optionCapacity.selected = true;
             }
           }
-          return;
+          break;
         case '100':
           disableRoomCapacity('0');
-          return;
+          break;
       }
     }
   }
