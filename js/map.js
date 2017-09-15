@@ -101,8 +101,8 @@
   }
 
   function disableRoomCapacity(count) {
-    for (var l = 0; l < numberCapacity.options.length; l++) {
-      optionCapacity = numberCapacity.options[l];
+    for (var i = 0; i < numberCapacity.options.length; i++) {
+      optionCapacity = numberCapacity.options[i];
       if (optionCapacity.value !== count) {
         optionCapacity.disabled = true;
       } else {
@@ -297,7 +297,7 @@
       newElement.className = 'pin';
       newElement.style.left = ad.location.x + 'px';
       newElement.style.top = ad.location.y + 'px';
-      newElement.innerHTML = '<img src="' + ad.author.avatar + '" class="rounded" width="40" height="40" tabindex="0">';
+      newElement.insertAdjacentHTML('afterbegin', '<img src="' + ad.author.avatar + '" class="rounded" width="40" height="40" tabindex="0">');
       newElement.dataset.id = index;
       pinNodes.push(newElement);
       if (index === 0) {
