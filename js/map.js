@@ -16,17 +16,17 @@
   var dialogTitle = document.querySelector('.dialog__title');
   var typeSelect = document.querySelector('#type');
   var numberSelect = document.querySelector('#room_number');
-  var roomCapacityField = document.querySelector('#capacity');
+  var numberCapacity = document.querySelector('#capacity');
   var timeIn = document.querySelector('#timein');
   var timeOut = document.querySelector('#timeout');
   var priceSelect = document.querySelector('#price');
-  var pinNodes = [];
   var optionCapacity;
-  var optionNumber;
+  var pinNodes = [];
 
   getRoomType();
   getTimeInSelect();
   getTimeOutSelect();
+  getRoomCapacity();
 
   tokioPinMap.addEventListener('click', function (evt) {
     movePin(evt);
@@ -56,52 +56,65 @@
     getTimeOutSelect();
   });
 
-  numberSelect.addEventListener('change', function () {
-    var numberSelected = numberSelect.options[numberSelect.selectedIndex].value;
-    switch (numberSelected) {
-      case '1':
-        switchNumber('1');
-        return;
-      case '2':
-        for (var j = 0; j < roomCapacityField.options.length; j++) {
-          optionCapacity = roomCapacityField.options[j];
-          if (optionCapacity.value !== '1' && optionCapacity.value !== '2') {
-            optionCapacity.disabled = true;
-          } else {
-            optionCapacity.disabled = false;
-          }
-        }
-        return;
-      case '3':
-        for (var j = 0; j < roomCapacityField.options.length; j++) {
-          optionCapacity = roomCapacityField.options[j];
-          if (optionCapacity.value !== '1' && optionCapacity.value !== '2' && optionCapacity.value !== '3') {
-            optionCapacity.disabled = true;
-          } else {
-            optionCapacity.disabled = false;
-          }
-        }
-        return;
-      case '100':
-        switchNumber('0');
-        return;
-    }
-  });
-
-  function switchNumber(capacityValue) {
-    for (var j = 0; j < roomCapacityField.options.length; j++) {
-      optionCapacity = roomCapacityField.options[j];
-      if (optionCapacity.value !== capacityValue) {
-        optionCapacity.disabled = true;
-      } else {
-        optionCapacity.disabled = false;
-      }
-    }
-  }
-
   typeSelect.addEventListener('change', function () {
     getRoomType();
   });
+
+  numberSelect.addEventListener('change', function () {
+    getRoomCapacity();
+  });
+
+  function getRoomCapacity() {
+    var numberSelected = numberSelect.options[numberSelect.selectedIndex];
+    if (numberSelected.selected) {
+      switch (numberSelected.value) {
+        case '1':
+          for (var i = 0; i < numberCapacity.options.length; i++) {
+            optionCapacity = numberCapacity.options[i];
+            if (optionCapacity.value !== '1') {
+              optionCapacity.disabled = true;
+            } else {
+              optionCapacity.disabled = false;
+              optionCapacity.selected = true;
+            }
+          }
+          return;
+        case '2':
+          for (var j = 0; j < numberCapacity.options.length; j++) {
+            optionCapacity = numberCapacity.options[j];
+            if (optionCapacity.value !== '1' && optionCapacity.value !== '2') {
+              optionCapacity.disabled = true;
+            } else {
+              optionCapacity.disabled = false;
+              optionCapacity.selected = true;
+            }
+          }
+          return;
+        case '3':
+          for (var k = 0; k < numberCapacity.options.length; k++) {
+            optionCapacity = numberCapacity.options[k];
+            if (optionCapacity.value !== '1' && optionCapacity.value !== '2' && optionCapacity.value !== '3') {
+              optionCapacity.disabled = true;
+            } else {
+              optionCapacity.disabled = false;
+              optionCapacity.selected = true;
+            }
+          }
+          return;
+        case '100':
+          for (var l = 0; l < numberCapacity.options.length; l++) {
+            optionCapacity = numberCapacity.options[l];
+            if (optionCapacity.value !== '0') {
+              optionCapacity.disabled = true;
+            } else {
+              optionCapacity.disabled = false;
+              optionCapacity.selected = true;
+            }
+          }
+          return;
+      }
+    }
+  }
 
   function getTimeInSelect() {
     var timeInSelected = timeIn.options[timeIn.selectedIndex].value;
