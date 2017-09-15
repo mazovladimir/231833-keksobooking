@@ -69,15 +69,7 @@
     if (numberSelected.selected) {
       switch (numberSelected.value) {
         case '1':
-          for (var i = 0; i < numberCapacity.options.length; i++) {
-            optionCapacity = numberCapacity.options[i];
-            if (optionCapacity.value !== '1') {
-              optionCapacity.disabled = true;
-            } else {
-              optionCapacity.disabled = false;
-              optionCapacity.selected = true;
-            }
-          }
+          disableRoomCapacity('1');
           return;
         case '2':
           for (var j = 0; j < numberCapacity.options.length; j++) {
@@ -102,16 +94,20 @@
           }
           return;
         case '100':
-          for (var l = 0; l < numberCapacity.options.length; l++) {
-            optionCapacity = numberCapacity.options[l];
-            if (optionCapacity.value !== '0') {
-              optionCapacity.disabled = true;
-            } else {
-              optionCapacity.disabled = false;
-              optionCapacity.selected = true;
-            }
-          }
+          disableRoomCapacity('0');
           return;
+      }
+    }
+  }
+
+  function disableRoomCapacity(count) {
+    for (var l = 0; l < numberCapacity.options.length; l++) {
+      optionCapacity = numberCapacity.options[l];
+      if (optionCapacity.value !== count) {
+        optionCapacity.disabled = true;
+      } else {
+        optionCapacity.disabled = false;
+        optionCapacity.selected = true;
       }
     }
   }
