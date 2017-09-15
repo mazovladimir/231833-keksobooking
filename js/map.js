@@ -135,16 +135,16 @@
     switch (getSelectedType) {
       case 'flat':
         priceSelect.value = 1000;
-        return;
+        break;
       case 'bungalo':
         priceSelect.value = 0;
-        return;
+        break;
       case 'house':
         priceSelect.value = 5000;
-        return;
+        break;
       case 'palace':
         priceSelect.value = 10000;
-        return;
+        break;
     }
   }
 
