@@ -22,6 +22,12 @@
   var priceSelect = document.querySelector('#price');
   var optionCapacity;
   var pinNodes = [];
+  var roomCount = {
+    one: ['1'],
+    two: ['1', '2'],
+    three: ['1', '2', '3'],
+    hundred: ['0']
+  };
 
   getRoomType();
   getTimeInSelect();
@@ -69,32 +75,16 @@
     if (numberSelected.selected) {
       switch (numberSelected.value) {
         case '1':
-          disableRoomCapacity('1');
+          disableRoomCapacity(roomCount['one']);
           break;
         case '2':
-          for (var j = 0; j < numberCapacity.options.length; j++) {
-            optionCapacity = numberCapacity.options[j];
-            if (optionCapacity.value !== '1' && optionCapacity.value !== '2') {
-              optionCapacity.disabled = true;
-            } else {
-              optionCapacity.disabled = false;
-              optionCapacity.selected = true;
-            }
-          }
+          disableRoomCapacity(roomCount['two']);
           break;
         case '3':
-          for (var k = 0; k < numberCapacity.options.length; k++) {
-            optionCapacity = numberCapacity.options[k];
-            if (optionCapacity.value !== '1' && optionCapacity.value !== '2' && optionCapacity.value !== '3') {
-              optionCapacity.disabled = true;
-            } else {
-              optionCapacity.disabled = false;
-              optionCapacity.selected = true;
-            }
-          }
+          disableRoomCapacity(roomCount['three']);
           break;
         case '100':
-          disableRoomCapacity('0');
+          disableRoomCapacity(roomCount['hundred']);
           break;
       }
     }
@@ -103,7 +93,7 @@
   function disableRoomCapacity(count) {
     for (var i = 0; i < numberCapacity.options.length; i++) {
       optionCapacity = numberCapacity.options[i];
-      if (optionCapacity.value !== count) {
+      if (count.indexOf(optionCapacity.value) === -1) {
         optionCapacity.disabled = true;
       } else {
         optionCapacity.disabled = false;
