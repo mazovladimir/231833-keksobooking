@@ -6,15 +6,37 @@
   var CHECKOUT = ['12:00', '13:00', '14:00'];
   var FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
   var TITLES = ['Большая уютная квартира', 'Маленькая неуютная квартира', 'Огромный прекрасный дворец', 'Маленький ужасный дворец', 'Красивый гостевой домик', 'Некрасивый негостеприимный домик', 'Уютное бунгало далеко от моря', 'Неуютное бунгало по колено в воде'];
-
   var ESC_KEYCODE = 27;
   var ENTER_KEYCODE = 13;
+  var CAPACITY_MAP = {
+    1: ['1'],
+    2: ['1', '2'],
+    3: ['1', '2', '3'],
+    100: ['0']
+  };
+  var TYPE_MAP = {
+    'bungalo': 0,
+    'flat': 1000,
+    'house': 5000,
+    'palace': 10000
+  };
 
   var tokioPinMap = document.querySelector('.tokyo__pin-map');
   var dialog = document.querySelector('.dialog');
   var dialogClose = dialog.querySelector('.dialog__close');
   var dialogTitle = document.querySelector('.dialog__title');
+  var roomType = document.querySelector('#type');
+  var roomNumber = document.querySelector('#room_number');
+  var roomCapacity = document.querySelector('#capacity');
+  var roomPrice = document.querySelector('#price');
+  var timeIn = document.querySelector('#timein');
+  var timeOut = document.querySelector('#timeout');
   var pinNodes = [];
+
+  getRoomType();
+  getRoomTimeIn();
+  getRoomTimeOut();
+  getRoomCapacity();
 
   tokioPinMap.addEventListener('click', function (evt) {
     movePin(evt);
@@ -35,6 +57,71 @@
       movePin(evt);
     }
   });
+
+  timeIn.addEventListener('change', function () {
+    getRoomTimeIn();
+  });
+
+  timeOut.addEventListener('change', function () {
+    getRoomTimeOut();
+  });
+
+  roomType.addEventListener('change', function () {
+    getRoomType();
+  });
+
+  roomNumber.addEventListener('change', function () {
+    getRoomCapacity();
+  });
+
+  function getRoomCapacity() {
+    var numberSelected = roomNumber.options[roomNumber.selectedIndex];
+    if (numberSelected.selected) {
+      disableRoomCapacity(CAPACITY_MAP[numberSelected.value]);
+    }
+  }
+
+  function disableRoomCapacity(values) {
+    for (var i = 0; i < roomCapacity.options.length; i++) {
+      var optionCapacity = roomCapacity.options[i];
+      if (values.indexOf(optionCapacity.value) === -1) {
+        optionCapacity.disabled = true;
+      } else {
+        optionCapacity.disabled = false;
+        optionCapacity.selected = true;
+      }
+    }
+  }
+
+  function getRoomTimeIn() {
+    var timeInSelected = timeIn.options[timeIn.selectedIndex].value;
+    for (var i = 0; i < timeOut.options.length; i++) {
+      if (timeInSelected === timeOut.options[i].value) {
+        timeOut.options[i].selected = true;
+      }
+    }
+  }
+
+  function getRoomTimeOut() {
+    var timeOutSelected = timeOut.options[timeOut.selectedIndex].value;
+    for (var i = 0; i < timeIn.options.length; i++) {
+      if (timeOutSelected === timeIn.options[i].value) {
+        timeIn.options[i].selected = true;
+      }
+    }
+  }
+
+  function getRoomType() {
+    var selectedType = roomType.options[roomType.selectedIndex];
+    if (selectedType.selected) {
+      getPriceType(TYPE_MAP[selectedType.value]);
+    }
+  }
+
+  function getPriceType(price) {
+    roomPrice.min = price;
+    roomPrice.value = price;
+  }
 
   function movePin(evt) {
     var targetPin = evt.target;
@@ -140,7 +227,7 @@
       randomMap.push(x < count);
     }
     randomMap = randomMap.sort(suffleFunc);
-    return array.filter(function (el, y) { // eslint-disable-line no-unused-vars
+    return array.filter(function (el, y) {
       return randomMap[y];
     }).sort(suffleFunc);
   }
@@ -184,7 +271,11 @@
       newElement.className = 'pin';
       newElement.style.left = ad.location.x + 'px';
       newElement.style.top = ad.location.y + 'px';
-      newElement.innerHTML = '<img src="' + ad.author.avatar + '" class="rounded" width="40" height="40" tabindex="0">';
+      var avatar = new Image(40, 40);
+      avatar.className = 'rounded';
+      avatar.tabIndex = '0';
+      avatar.src = ad.author.avatar;
+      newElement.appendChild(avatar);
       newElement.dataset.id = index;
       pinNodes.push(newElement);
       if (index === 0) {
