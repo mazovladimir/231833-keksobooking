@@ -134,15 +134,19 @@
     var getSelectedType = typeSelect.options[typeSelect.selectedIndex].value;
     switch (getSelectedType) {
       case 'flat':
+        priceSelect.min = 1000;
         priceSelect.value = 1000;
         break;
       case 'bungalo':
+        priceSelect.min = 0;
         priceSelect.value = 0;
         break;
       case 'house':
+        priceSelect.min = 5000;
         priceSelect.value = 5000;
         break;
       case 'palace':
+        priceSelect.min = 10000;
         priceSelect.value = 10000;
         break;
     }
