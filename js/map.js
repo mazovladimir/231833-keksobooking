@@ -6,7 +6,6 @@
   var CHECKOUT = ['12:00', '13:00', '14:00'];
   var FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
   var TITLES = ['Большая уютная квартира', 'Маленькая неуютная квартира', 'Огромный прекрасный дворец', 'Маленький ужасный дворец', 'Красивый гостевой домик', 'Некрасивый негостеприимный домик', 'Уютное бунгало далеко от моря', 'Неуютное бунгало по колено в воде'];
-
   var ESC_KEYCODE = 27;
   var ENTER_KEYCODE = 13;
   var roomCount = {
@@ -14,6 +13,12 @@
     2: ['1', '2'],
     3: ['1', '2', '3'],
     100: ['0']
+  };
+  var typePrice = {
+    'bungalo': 0,
+    'flat': 1000,
+    'house': 5000,
+    'palace': 10000
   };
 
   var tokioPinMap = document.querySelector('.tokyo__pin-map');
@@ -26,7 +31,6 @@
   var timeIn = document.querySelector('#timein');
   var timeOut = document.querySelector('#timeout');
   var priceSelect = document.querySelector('#price');
-  var optionCapacity;
   var pinNodes = [];
 
   getRoomType();
@@ -79,7 +83,7 @@
 
   function disableRoomCapacity(count) {
     for (var i = 0; i < numberCapacity.options.length; i++) {
-      optionCapacity = numberCapacity.options[i];
+      var optionCapacity = numberCapacity.options[i];
       if (count.indexOf(optionCapacity.value) === -1) {
         optionCapacity.disabled = true;
       } else {
@@ -108,27 +112,16 @@
   }
 
   function getRoomType() {
-    var getSelectedType = typeSelect.options[typeSelect.selectedIndex].value;
-    switch (getSelectedType) {
-      case 'flat':
-        priceSelect.min = 1000;
-        priceSelect.value = 1000;
-        break;
-      case 'bungalo':
-        priceSelect.min = 0;
-        priceSelect.value = 0;
-        break;
-      case 'house':
-        priceSelect.min = 5000;
-        priceSelect.value = 5000;
-        break;
-      case 'palace':
-        priceSelect.min = 10000;
-        priceSelect.value = 10000;
-        break;
+    var selectedType = typeSelect.options[typeSelect.selectedIndex];
+    if (selectedType.selected) {
+      getPriceType(typePrice[selectedType.value]);
     }
   }
 
+  function getPriceType(price) {
+    priceSelect.min = price;
+    priceSelect.value = price;
+  }
 
   function movePin(evt) {
     var targetPin = evt.target;
