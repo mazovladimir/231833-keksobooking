@@ -9,6 +9,12 @@
 
   var ESC_KEYCODE = 27;
   var ENTER_KEYCODE = 13;
+  var roomCount = {
+    one: ['1'],
+    two: ['1', '2'],
+    three: ['1', '2', '3'],
+    hundred: ['0']
+  };
 
   var tokioPinMap = document.querySelector('.tokyo__pin-map');
   var dialog = document.querySelector('.dialog');
@@ -22,12 +28,6 @@
   var priceSelect = document.querySelector('#price');
   var optionCapacity;
   var pinNodes = [];
-  var roomCount = {
-    one: ['1'],
-    two: ['1', '2'],
-    three: ['1', '2', '3'],
-    hundred: ['0']
-  };
 
   getRoomType();
   getTimeInSelect();
@@ -247,7 +247,7 @@
       randomMap.push(x < count);
     }
     randomMap = randomMap.sort(suffleFunc);
-    return array.filter(function (el, y) { // eslint-disable-line no-unused-vars
+    return array.filter(function (el, y) {
       return randomMap[y];
     }).sort(suffleFunc);
   }
