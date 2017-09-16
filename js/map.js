@@ -10,10 +10,10 @@
   var ESC_KEYCODE = 27;
   var ENTER_KEYCODE = 13;
   var roomCount = {
-    one: ['1'],
-    two: ['1', '2'],
-    three: ['1', '2', '3'],
-    hundred: ['0']
+    1: ['1'],
+    2: ['1', '2'],
+    3: ['1', '2', '3'],
+    100: ['0']
   };
 
   var tokioPinMap = document.querySelector('.tokyo__pin-map');
@@ -73,20 +73,7 @@
   function getRoomCapacity() {
     var numberSelected = numberSelect.options[numberSelect.selectedIndex];
     if (numberSelected.selected) {
-      switch (numberSelected.value) {
-        case '1':
-          disableRoomCapacity(roomCount['one']);
-          break;
-        case '2':
-          disableRoomCapacity(roomCount['two']);
-          break;
-        case '3':
-          disableRoomCapacity(roomCount['three']);
-          break;
-        case '100':
-          disableRoomCapacity(roomCount['hundred']);
-          break;
-      }
+      disableRoomCapacity(roomCount[numberSelected.value]);
     }
   }
 
