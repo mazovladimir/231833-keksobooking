@@ -21,28 +21,28 @@
     'palace': 10000
   };
 
-  getRoomType();
-  getRoomTimeIn();
-  getRoomTimeOut();
-  getRoomCapacity();
+  selectRoomType();
+  selectRoomTimeIn();
+  selectRoomTimeOut();
+  selectRoomCapacity();
 
   timeIn.addEventListener('change', function () {
-    getRoomTimeIn();
+    selectRoomTimeIn();
   });
 
   timeOut.addEventListener('change', function () {
-    getRoomTimeOut();
+    selectRoomTimeOut();
   });
 
   roomType.addEventListener('change', function () {
-    getRoomType();
+    selectRoomType();
   });
 
   roomNumber.addEventListener('change', function () {
-    getRoomCapacity();
+    selectRoomCapacity();
   });
 
-  function getRoomCapacity() {
+  function selectRoomCapacity() {
     var numberSelected = roomNumber.options[roomNumber.selectedIndex];
     if (numberSelected.selected) {
       disableRoomCapacity(CAPACITY_MAP[numberSelected.value]);
@@ -61,7 +61,7 @@
     }
   }
 
-  function getRoomTimeIn() {
+  function selectRoomTimeIn() {
     var timeInSelected = timeIn.options[timeIn.selectedIndex].value;
     for (var i = 0; i < timeOut.options.length; i++) {
       if (timeInSelected === timeOut.options[i].value) {
@@ -70,7 +70,7 @@
     }
   }
 
-  function getRoomTimeOut() {
+  function selectRoomTimeOut() {
     var timeOutSelected = timeOut.options[timeOut.selectedIndex].value;
     for (var i = 0; i < timeIn.options.length; i++) {
       if (timeOutSelected === timeIn.options[i].value) {
@@ -79,14 +79,14 @@
     }
   }
 
-  function getRoomType() {
+  function selectRoomType() {
     var selectedType = roomType.options[roomType.selectedIndex];
     if (selectedType.selected) {
-      getPriceType(TYPE_MAP[selectedType.value]);
+      setPriceType(TYPE_MAP[selectedType.value]);
     }
   }
 
-  function getPriceType(price) {
+  function setPriceType(price) {
     roomPrice.min = price;
     roomPrice.value = price;
   }
