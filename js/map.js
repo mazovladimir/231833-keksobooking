@@ -8,18 +8,6 @@
   var TITLES = ['Большая уютная квартира', 'Маленькая неуютная квартира', 'Огромный прекрасный дворец', 'Маленький ужасный дворец', 'Красивый гостевой домик', 'Некрасивый негостеприимный домик', 'Уютное бунгало далеко от моря', 'Неуютное бунгало по колено в воде'];
   var ESC_KEYCODE = 27;
   var ENTER_KEYCODE = 13;
-  window.CAPACITY_MAP = {
-    1: ['1'],
-    2: ['1', '2'],
-    3: ['1', '2', '3'],
-    100: ['0']
-  };
-  window.TYPE_MAP = {
-    'bungalo': 0,
-    'flat': 1000,
-    'house': 5000,
-    'palace': 10000
-  };
 
   var tokioPinMap = document.querySelector('.tokyo__pin-map');
   var dialog = document.querySelector('.dialog');
