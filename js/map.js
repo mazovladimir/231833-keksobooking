@@ -1,16 +1,18 @@
 'use strict';
 
-(function () {
-  window.TYPES = ['flat', 'house', 'bungalo'];
-  window.CHECKIN = ['12:00', '13:00', '14:00'];
-  window.CHECKOUT = ['12:00', '13:00', '14:00'];
-  window.FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
-  window.TITLES = ['Большая уютная квартира', 'Маленькая неуютная квартира', 'Огромный прекрасный дворец', 'Маленький ужасный дворец', 'Красивый гостевой домик', 'Некрасивый негостеприимный домик', 'Уютное бунгало далеко от моря', 'Неуютное бунгало по колено в воде'];
-  window.ESC_KEYCODE = 27;
-  window.ENTER_KEYCODE = 13;
-
-  window.tokioPinMap = document.querySelector('.tokyo__pin-map');
-  window.pinNodes = [];
+var map = (function () {
+  var TYPES = ['flat', 'house', 'bungalo'];
+  var CHECKIN = ['12:00', '13:00', '14:00'];
+  var CHECKOUT = ['12:00', '13:00', '14:00'];
+  var FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
+  var TITLES = ['Большая уютная квартира', 'Маленькая неуютная квартира', 'Огромный прекрасный дворец', 'Маленький ужасный дворец', 'Красивый гостевой домик', 'Некрасивый негостеприимный домик', 'Уютное бунгало далеко от моря', 'Неуютное бунгало по колено в воде'];
+  var ESC_KEYCODE = 27;
+  var ENTER_KEYCODE = 13;
+  return {
+    ENTER_KEYCODE: ENTER_KEYCODE
+  };
+  var tokioPinMap = document.querySelector('.tokyo__pin-map');
+  var pinNodes = [];
 
   window.getRandom = function (max, min) {
     if (typeof min === 'undefined') {
@@ -64,5 +66,5 @@
     return ads;
   }
 
-  window.myAds = createAds(8);
+  myAds = createAds(8);
 })();

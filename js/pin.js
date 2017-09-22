@@ -1,9 +1,6 @@
 'use strict';
 
-(function () {
-  var myAds = window.myAds;
-  var pinNodes = window.pinNodes;
-
+var pin = (function () {
   function getAdFragment(ads) {
     var fragmentAd = document.createDocumentFragment();
     ads.forEach(function (ad, index) {
@@ -71,7 +68,7 @@
   });
 
   document.addEventListener('keydown', function (evt) {
-    if (evt.keyCode === window.ENTER_KEYCODE) {
+    if (evt.keyCode === map.ENTER_KEYCODE) {
       movePin(evt);
     }
   });
