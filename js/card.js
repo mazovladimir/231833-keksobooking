@@ -1,20 +1,13 @@
 'use strict';
 
-
-card.closeDialog();
-card.openDialog();
-card.replaceDialog();
-
-var card = (function () {
+window.card = (function () {
   var ESC_KEYCODE = 27;
-  var CHECKIN = ['12:00', '13:00', '14:00'];
-  var CHECKOUT = ['12:00', '13:00', '14:00'];
-  var FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
-  var dialog = document.querySelector('.dialog');
+  var dialog = window.dialog;
   var dialogClose = dialog.querySelector('.dialog__close');
   var dialogTitle = document.querySelector('.dialog__title');
-  var getRandom = window.getRandom;
-  var getRandomArray = window.getRandomArray;
+  var getAdFragment = window.map.getAdFragment;
+  var myAds = window.myAds;
+  var removePinActive = window.pin.removePinActive;
 
   function getType(type) {
     switch (type) {
@@ -26,31 +19,6 @@ var card = (function () {
         return 'Бунгало';
     }
     return '';
-  }
-
-  function Ad(id, avatar, title) {
-    this.id = id;
-    this.isActive = false;
-    this.author = {
-      avatar: avatar,
-    };
-    this.location = {
-      x: getRandom(900, 300),
-      y: getRandom(500, 100),
-    };
-    this.offer = {
-      title: title,
-      address: this.location.x + ', ' + this.location.y,
-      price: getRandom(1000000, 1000),
-      type: TYPES[getRandom(TYPES.length - 1)],
-      rooms: getRandom(5, 1),
-      guests: getRandom(100, 1),
-      checkin: CHECKIN[getRandom(CHECKIN.length - 1)],
-      checkout: CHECKOUT[getRandom(CHECKOUT.length - 1)],
-      features: getRandomArray(FEATURES, 1),
-      description: '',
-      photos: [],
-    };
   }
 
   function renderAd(ad) {
@@ -88,17 +56,23 @@ var card = (function () {
     removePinActive();
   }
 
+  function replacePinDialog(myAd) {
+    var replaceAd = document.querySelector('.dialog__panel');
+    replaceAd.parentNode.replaceChild(renderAd(myAd), replaceAd);
+  }
+
   function changeDialog(targetPin, targetId) {
     dialogTitle.querySelector('img').src = targetPin.src;
     replacePinDialog(myAds[targetId]);
   }
 
-  replacePinDialog(myAds[0]);
+  replacePinDialog(window.myAds[0]);
   document.querySelector('.dialog__title').querySelector('img').src = myAds[0].author.avatar;
   document.querySelector('.tokyo__pin-map').appendChild(getAdFragment(myAds));
+
   return {
     closeDialog: closeDialog,
-    openDialog: openDialog,
-    replaceDialog: replaceDialog
+    replacePinDialog: replacePinDialog,
+    changeDialog: changeDialog
   };
 }());

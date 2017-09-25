@@ -1,42 +1,46 @@
 'use strict';
 
-var map = (function () {
-  var TYPES = ['flat', 'house', 'bungalo'];
+window.map = (function () {
   var TITLES = ['Большая уютная квартира', 'Маленькая неуютная квартира', 'Огромный прекрасный дворец', 'Маленький ужасный дворец', 'Красивый гостевой домик', 'Некрасивый негостеприимный домик', 'Уютное бунгало далеко от моря', 'Неуютное бунгало по колено в воде'];
+  var getRandomArray = window.util.getRandomArray;
+  window.myAds = createAds(8);
+  var pinNodes = [];
+  var Ad = window.data.Ad;
 
-  window.getRandom = function (max, min) {
-    if (typeof min === 'undefined') {
-      min = 0;
-    }
-    return Math.floor(Math.random() * (max - min + 1)) + min;
+  function getAdFragment(ads) {
+    var fragmentAd = document.createDocumentFragment();
+    ads.forEach(function (ad, index) {
+      var newElement = document.createElement('div');
+      newElement.className = 'pin';
+      newElement.style.left = ad.location.x + 'px';
+      newElement.style.top = ad.location.y + 'px';
+      var avatar = new Image(40, 40);
+      avatar.className = 'rounded';
+      avatar.tabIndex = '0';
+      avatar.src = ad.author.avatar;
+      newElement.appendChild(avatar);
+      newElement.dataset.id = index;
+      pinNodes.push(newElement);
+      if (index === 0) {
+        newElement.classList.add('pin--active');
+        ad.isActive = true;
+      }
+      fragmentAd.appendChild(newElement);
+    });
+    return fragmentAd;
   }
 
-  function suffleFunc() {
-    var rand = getRandom(1);
-    return rand || -1;
+  function getAvatars() {
+    var avatars = [];
+    for (var avatarNumber = 1; avatarNumber < 9; avatarNumber++) {
+      avatars.push('img/avatars/user0' + avatarNumber + '.png');
+    }
+    return avatars;
   }
-
-  window.getRandomArray = function (array, minCount, maxCount) {
-    if (typeof minCount === 'undefined') {
-      minCount = array.length;
-    }
-    if (typeof maxCount === 'undefined') {
-      maxCount = array.length;
-    }
-    var count = getRandom(maxCount, minCount);
-    var randomMap = [];
-    for (var x = 0; x < array.length; x++) {
-      randomMap.push(x < count);
-    }
-    randomMap = randomMap.sort(suffleFunc);
-    return array.filter(function (el, y) {
-      return randomMap[y];
-    }).sort(suffleFunc);
-  };
 
   function createAds(count) {
-    var shuffleAvatars = window.getRandomArray(getAvatars());
-    var shuffleTitles = window.getRandomArray(TITLES);
+    var shuffleAvatars = getRandomArray(getAvatars());
+    var shuffleTitles = getRandomArray(TITLES);
     var ads = [];
     for (var i = 0; i < count; i++) {
       ads.push(new Ad(i, shuffleAvatars.splice(0, 1), shuffleTitles.splice(0, 1)));
@@ -44,5 +48,7 @@ var map = (function () {
     return ads;
   }
 
-  myAds = createAds(8);
+  return {
+    getAdFragment: getAdFragment
+  };
 })();

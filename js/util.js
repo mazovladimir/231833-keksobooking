@@ -1,16 +1,16 @@
 'use strict';
 
-var util = (function () {
+window.util = (function () {
+  function suffleFunc() {
+    var rand = getRandom(1);
+    return rand || -1;
+  }
+
   function getRandom(max, min) {
     if (typeof min === 'undefined') {
       min = 0;
     }
     return Math.floor(Math.random() * (max - min + 1)) + min;
-  }
-
-  function suffleFunc() {
-    var rand = getRandom(1);
-    return rand || -1;
   }
 
   function getRandomArray(array, minCount, maxCount) {
