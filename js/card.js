@@ -1,11 +1,32 @@
 'use strict';
 
-(function () {
-  var CHECKIN = window.CHECKIN;
-  var CHECKOUT = window.CHECKOUT;
-  var TYPES = window.TYPES;
+
+card.closeDialog();
+card.openDialog();
+card.replaceDialog();
+
+var card = (function () {
+  var ESC_KEYCODE = 27;
+  var CHECKIN = ['12:00', '13:00', '14:00'];
+  var CHECKOUT = ['12:00', '13:00', '14:00'];
+  var FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
+  var dialog = document.querySelector('.dialog');
+  var dialogClose = dialog.querySelector('.dialog__close');
+  var dialogTitle = document.querySelector('.dialog__title');
   var getRandom = window.getRandom;
-  var myAds = window.myAds;
+  var getRandomArray = window.getRandomArray;
+
+  function getType(type) {
+    switch (type) {
+      case 'flat':
+        return 'Квартира';
+      case 'house':
+        return 'Дом';
+      case 'bungalo':
+        return 'Бунгало';
+    }
+    return '';
+  }
 
   function Ad(id, avatar, title) {
     this.id = id;
@@ -31,10 +52,6 @@
       photos: [],
     };
   }
-  
-  var dialog = document.querySelector('.dialog');
-  var dialogClose = dialog.querySelector('.dialog__close');
-  var dialogTitle = document.querySelector('.dialog__title');
 
   function renderAd(ad) {
     var fragmentFeature = document.createDocumentFragment();
@@ -61,7 +78,7 @@
   });
 
   document.addEventListener('keydown', function (evt) {
-    if (evt.keyCode === window.ESC_KEYCODE) {
+    if (evt.keyCode === ESC_KEYCODE) {
       closeDialog();
     }
   });
@@ -79,4 +96,9 @@
   replacePinDialog(myAds[0]);
   document.querySelector('.dialog__title').querySelector('img').src = myAds[0].author.avatar;
   document.querySelector('.tokyo__pin-map').appendChild(getAdFragment(myAds));
+  return {
+    closeDialog: closeDialog,
+    openDialog: openDialog,
+    replaceDialog: replaceDialog
+  };
 }());

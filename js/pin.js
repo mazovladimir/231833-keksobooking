@@ -1,6 +1,12 @@
 'use strict';
 
 var pin = (function () {
+  var ENTER_KEYCODE = 13;
+  var tokioPinMap = document.querySelector('.tokyo__pin-map');
+  var pinNodes = [];
+  var getRandom = util.getRandom;
+  var getRandomArray = util.getRandomArray;
+
   function getAdFragment(ads) {
     var fragmentAd = document.createDocumentFragment();
     ads.forEach(function (ad, index) {
@@ -68,7 +74,7 @@ var pin = (function () {
   });
 
   document.addEventListener('keydown', function (evt) {
-    if (evt.keyCode === map.ENTER_KEYCODE) {
+    if (evt.keyCode === ENTER_KEYCODE) {
       movePin(evt);
     }
   });
