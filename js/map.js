@@ -4,8 +4,8 @@ window.map = (function () {
   var TITLES = ['Большая уютная квартира', 'Маленькая неуютная квартира', 'Огромный прекрасный дворец', 'Маленький ужасный дворец', 'Красивый гостевой домик', 'Некрасивый негостеприимный домик', 'Уютное бунгало далеко от моря', 'Неуютное бунгало по колено в воде'];
   var getRandomArray = window.util.getRandomArray;
   window.myAds = createAds(8);
-  var pinNodes = [];
   var Ad = window.data.Ad;
+  var pinNodes = [];
 
   function getAdFragment(ads) {
     var fragmentAd = document.createDocumentFragment();
@@ -49,6 +49,7 @@ window.map = (function () {
   }
 
   return {
-    getAdFragment: getAdFragment
+    getAdFragment: getAdFragment,
+    createAds: createAds
   };
 })();
