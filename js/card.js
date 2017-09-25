@@ -6,7 +6,6 @@ window.card = (function () {
   var dialogClose = dialog.querySelector('.dialog__close');
   var dialogTitle = document.querySelector('.dialog__title');
   var myAds = window.myAds;
-  var getAdFragment = window.map.getAdFragment(myAds);
   var removePinActive = window.pin.removePinActive;
 
   function getType(type) {
@@ -67,8 +66,6 @@ window.card = (function () {
   }
 
   replacePinDialog(myAds[0]);
-  document.querySelector('.dialog__title').querySelector('img').src = myAds[0].author.avatar;
-  document.querySelector('.tokyo__pin-map').appendChild(getAdFragment(myAds));
 
   return {
     closeDialog: closeDialog,

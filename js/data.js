@@ -1,14 +1,35 @@
 'use strict';
 
 window.data = (function () {
-  window.dialog = document.querySelector('.dialog');
-
   var getRandomArray = window.util.getRandomArray;
   var getRandom = window.util.getRandom;
   var CHECKIN = ['12:00', '13:00', '14:00'];
   var CHECKOUT = ['12:00', '13:00', '14:00'];
   var FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
   var TYPES = ['flat', 'house', 'bungalo'];
+  var TITLES = ['Большая уютная квартира', 'Маленькая неуютная квартира', 'Огромный прекрасный дворец', 'Маленький ужасный дворец', 'Красивый гостевой домик', 'Некрасивый негостеприимный домик', 'Уютное бунгало далеко от моря', 'Неуютное бунгало по колено в воде'];
+
+  window.pinNodes = [];
+  window.dialog = document.querySelector('.dialog');
+  window.myAds = createAds(8);
+
+  function getAvatars() {
+    var avatars = [];
+    for (var avatarNumber = 1; avatarNumber < 9; avatarNumber++) {
+      avatars.push('img/avatars/user0' + avatarNumber + '.png');
+    }
+    return avatars;
+  }
+
+  function createAds(count) {
+    var shuffleAvatars = getRandomArray(getAvatars());
+    var shuffleTitles = getRandomArray(TITLES);
+    var ads = [];
+    for (var i = 0; i < count; i++) {
+      ads.push(new Ad(i, shuffleAvatars.splice(0, 1), shuffleTitles.splice(0, 1)));
+    }
+    return ads;
+  }
 
   function Ad(id, avatar, title) {
     this.id = id;
