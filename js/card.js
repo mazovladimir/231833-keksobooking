@@ -1,12 +1,12 @@
 'use strict';
 
 window.card = (function () {
+  var dialog = window.data.dialog;
+  var myAds = window.data.myAds;
+  var removePinActive = window.pin.removePinActive;
   var ESC_KEYCODE = 27;
-  var dialog = document.querySelector('.dialog');
   var dialogClose = dialog.querySelector('.dialog__close');
   var dialogTitle = document.querySelector('.dialog__title');
-  var myAds = window.myAds;
-  var removePinActive = window.pin.removePinActive;
 
   function getType(type) {
     switch (type) {

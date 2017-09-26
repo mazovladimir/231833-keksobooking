@@ -8,10 +8,9 @@ window.data = (function () {
   var FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
   var TYPES = ['flat', 'house', 'bungalo'];
   var TITLES = ['Большая уютная квартира', 'Маленькая неуютная квартира', 'Огромный прекрасный дворец', 'Маленький ужасный дворец', 'Красивый гостевой домик', 'Некрасивый негостеприимный домик', 'Уютное бунгало далеко от моря', 'Неуютное бунгало по колено в воде'];
-
-  window.pinNodes = [];
-  window.dialog = document.querySelector('.dialog');
-  window.myAds = createAds(8);
+  var pinNodes = [];
+  var dialog = document.querySelector('.dialog');
+  var myAds = createAds(8);
 
   function getAvatars() {
     var avatars = [];
@@ -57,6 +56,9 @@ window.data = (function () {
   }
 
   return {
-    Ad: Ad
+    Ad: Ad,
+    pinNodes: pinNodes,
+    dialog: dialog,
+    myAds: myAds
   };
 })();

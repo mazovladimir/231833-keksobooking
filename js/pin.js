@@ -1,11 +1,11 @@
 'use strict';
 
 window.pin = (function () {
+  var myAds = window.data.myAds;
+  var dialog = window.data.dialog;
+  var pinNodes = window.data.pinNodes;
   var ENTER_KEYCODE = 13;
   var tokioPinMap = document.querySelector('.tokyo__pin-map');
-  var myAds = window.myAds;
-  var dialog = window.dialog;
-  var pinNodes = window.pinNodes;
 
   function getAdFragment(ads) {
     var fragmentAd = document.createDocumentFragment();
