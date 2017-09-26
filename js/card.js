@@ -8,6 +8,16 @@ window.card = (function () {
   var dialogClose = dialog.querySelector('.dialog__close');
   var dialogTitle = document.querySelector('.dialog__title');
 
+  dialogClose.addEventListener('click', function () {
+    closeDialog();
+  });
+
+  document.addEventListener('keydown', function (evt) {
+    if (evt.keyCode === ESC_KEYCODE) {
+      closeDialog();
+    }
+  });
+
   function getType(type) {
     switch (type) {
       case 'flat':
@@ -39,16 +49,6 @@ window.card = (function () {
     adsElement.querySelector('.lodge__description').textContent = ad.offer.description;
     return adsElement;
   }
-
-  dialogClose.addEventListener('click', function () {
-    closeDialog();
-  });
-
-  document.addEventListener('keydown', function (evt) {
-    if (evt.keyCode === ESC_KEYCODE) {
-      closeDialog();
-    }
-  });
 
   function closeDialog() {
     dialog.style.visibility = 'hidden';

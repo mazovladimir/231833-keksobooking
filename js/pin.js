@@ -7,6 +7,16 @@ window.pin = (function () {
   var ENTER_KEYCODE = 13;
   var tokioPinMap = document.querySelector('.tokyo__pin-map');
 
+  tokioPinMap.addEventListener('click', function (evt) {
+    movePin(evt);
+  });
+
+  document.addEventListener('keydown', function (evt) {
+    if (evt.keyCode === ENTER_KEYCODE) {
+      movePin(evt);
+    }
+  });
+
   function getAdFragment(ads) {
     var fragmentAd = document.createDocumentFragment();
     ads.forEach(function (ad, index) {
@@ -55,16 +65,6 @@ window.pin = (function () {
   function getActivePin(item) {
     return item.isActive === true;
   }
-
-  tokioPinMap.addEventListener('click', function (evt) {
-    movePin(evt);
-  });
-
-  document.addEventListener('keydown', function (evt) {
-    if (evt.keyCode === ENTER_KEYCODE) {
-      movePin(evt);
-    }
-  });
 
   document.querySelector('.dialog__title').querySelector('img').src = myAds[0].author.avatar;
   document.querySelector('.tokyo__pin-map').appendChild(getAdFragment(myAds));
