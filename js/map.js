@@ -10,6 +10,15 @@ window.map = (function () {
     mouseDown(evt);
   });
 
+  address.addEventListener('input', function () {
+    movePin();
+  });
+
+  function movePin() {
+    pinMain.style.top = (parseInt(address.value.replace('x:', '').replace('y:', '').split(',')[1], 10) - 94) + 'px';
+    pinMain.style.left = (parseInt(address.value.replace('x:', '').replace('y:', '').split(',')[0], 10) - 36) + 'px';
+  }
+
   function mouseDown(evt) {
     startCoords = {
       x: evt.cleintX,
