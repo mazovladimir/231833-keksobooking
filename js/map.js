@@ -3,32 +3,32 @@
 window.map = (function () {
   var address = document.querySelector('#address');
   var pinMain = document.querySelector('.pin__main');
-  address.readOnly = true;
 
   pinMain.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
 
     var startCoords = {
-      x: evt.clientX,
-      y: evt.clientY
+      x: evt.pageX,
+      y: evt.pageY
     };
 
     function mouseMove(moveEvt) {
       moveEvt.preventDefault();
 
       var shift = {
-        x: startCoords.x - moveEvt.clientX,
-        y: startCoords.y - moveEvt.clientY
+        x: startCoords.x - moveEvt.pageX,
+        y: startCoords.y - moveEvt.pageY
       };
 
       startCoords = {
-        x: moveEvt.clientX,
-        y: moveEvt.clientY
+        x: moveEvt.pageX,
+        y: moveEvt.pageY
       };
 
       pinMain.style.top = (pinMain.offsetTop - shift.y) + 'px';
       pinMain.style.left = (pinMain.offsetLeft - shift.x) + 'px';
-      address.value = 'x:' + startCoords.x + ', y:' + startCoords.y;
+
+      address.value = 'x:' + (parseInt(pinMain.style.left) + 36) + ', y:' + pinMain.style.top;
     }
 
     function mouseUp(upEvt) {
