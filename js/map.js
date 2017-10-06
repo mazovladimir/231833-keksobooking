@@ -62,6 +62,10 @@ window.map = (function () {
       pinMain.style.top = '616px';
     }
 
+    if (pinMainY < 112) {
+      pinMain.style.top = '18px';
+    }
+
     address.value = 'x:' + pinMainX + ', y:' + pinMainY;
   }
 
