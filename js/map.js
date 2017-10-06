@@ -4,6 +4,8 @@ window.map = (function () {
   var address = document.querySelector('#address');
   var pinMain = document.querySelector('.pin__main');
   var startCoords;
+  var pinMainX;
+  var pinMainY;
 
   pinMain.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
@@ -45,7 +47,10 @@ window.map = (function () {
     pinMain.style.top = (pinMain.offsetTop - shift.y) + 'px';
     pinMain.style.left = (pinMain.offsetLeft - shift.x) + 'px';
 
-    address.value = 'x:' + (parseInt(pinMain.style.left, 10) + 36) + ', y:' + (parseInt(pinMain.style.top, 10) + 94);
+    pinMainX = parseInt(pinMain.style.left, 10) + 36;
+    pinMainY = parseInt(pinMain.style.top, 10) + 94;
+
+    address.value = 'x:' + pinMainX + ', y:' + pinMainY;
   }
 
   function mouseUp(upEvt) {
