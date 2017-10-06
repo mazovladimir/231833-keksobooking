@@ -50,6 +50,18 @@ window.map = (function () {
     pinMainX = parseInt(pinMain.style.left, 10) + 36;
     pinMainY = parseInt(pinMain.style.top, 10) + 94;
 
+    if (pinMainX < 0) {
+      pinMain.style.left = '-36px';
+    }
+
+    if (pinMainX > 1200) {
+      pinMain.style.left = '1164px';
+    }
+
+    if (pinMainY > 710) {
+      pinMain.style.top = '616px';
+    }
+
     address.value = 'x:' + pinMainX + ', y:' + pinMainY;
   }
 
