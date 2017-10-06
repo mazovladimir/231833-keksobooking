@@ -3,36 +3,54 @@
 window.map = (function () {
   var address = document.querySelector('#address');
   var pinMain = document.querySelector('.pin__main');
+  var area = document.querySelector('.tokyo');
+  var areaRect = area.getBoundingClientRect();
+  var pinRect = pinMain.getBoundingClientRect();
   var startCoords;
-  var pinMainX;
-  var pinMainY;
+  var isMouseDown = false;
+  var pinMainX = areaRect.width / 2;
+  var pinMainY = areaRect.height / 2;
 
-  pinMain.addEventListener('mousedown', function (evt) {
-    evt.preventDefault();
-    mouseDown(evt);
-  });
+  setPinPosition(pinMainX, pinMainY);
+  pinMain.style.zIndex = 2;
+
+  pinMain.addEventListener('mousedown', mouseDown);
+  area.addEventListener('mousemove', mouseMove);
+  area.addEventListener('mouseup', mouseUp);
+  area.addEventListener('mouseleave', mouseUp);
 
   address.addEventListener('input', function () {
     movePin();
   });
 
+  function setPinPosition(x, y) {
+    pinMain.style.top = y - pinRect.height + 'px';
+    pinMain.style.left = x - pinRect.width / 2 + 'px';
+  }
+
   function movePin() {
-    pinMain.style.top = (parseInt(address.value.replace('x:', '').replace('y:', '').split(',')[1], 10) - 94) + 'px';
-    pinMain.style.left = (parseInt(address.value.replace('x:', '').replace('y:', '').split(',')[0], 10) - 36) + 'px';
+    var parsedAddress = address.value.match(/x:\s*(\d+),\s*y:\s*(\d+)/);
+    if (parsedAddress[1] && parsedAddress[2]) {
+      setPinPosition(+parsedAddress[1], +parsedAddress[2]);
+    }
   }
 
   function mouseDown(evt) {
+    evt.preventDefault();
+
     startCoords = {
-      x: evt.cleintX,
+      x: evt.clientX,
       y: evt.clientY
     };
-
-    document.addEventListener('mousemove', mouseMove);
-    document.addEventListener('mouseup', mouseUp);
+    isMouseDown = true;
   }
 
   function mouseMove(moveEvt) {
     moveEvt.preventDefault();
+
+    if (!isMouseDown) {
+      return false;
+    }
 
     var shift = {
       x: startCoords.x - moveEvt.clientX,
@@ -44,34 +62,20 @@ window.map = (function () {
       y: moveEvt.clientY
     };
 
-    pinMain.style.top = (pinMain.offsetTop - shift.y) + 'px';
-    pinMain.style.left = (pinMain.offsetLeft - shift.x) + 'px';
+    pinMainX = pinMainX - shift.x;
+    pinMainY = pinMainY - shift.y;
+    pinMainX = Math.min(pinMainX, areaRect.width);
+    pinMainX = Math.max(pinMainX, 0);
+    pinMainY = Math.min(pinMainY, areaRect.height);
+    pinMainY = Math.max(pinMainY, 0);
 
-    pinMainX = parseInt(pinMain.style.left, 10) + 36;
-    pinMainY = parseInt(pinMain.style.top, 10) + 94;
-
-    if (pinMainX < 0) {
-      pinMain.style.left = '-36px';
-    }
-
-    if (pinMainX > 1200) {
-      pinMain.style.left = '1164px';
-    }
-
-    if (pinMainY > 710) {
-      pinMain.style.top = '616px';
-    }
-
-    if (pinMainY < 112) {
-      pinMain.style.top = '18px';
-    }
-
+    setPinPosition(pinMainX, pinMainY);
     address.value = 'x:' + pinMainX + ', y:' + pinMainY;
+    return '';
   }
 
   function mouseUp(upEvt) {
     upEvt.preventDefault();
-    document.removeEventListener('mousemove', mouseMove);
-    document.removeEventListener('mouseup', mouseUp);
+    isMouseDown = false;
   }
 })();
