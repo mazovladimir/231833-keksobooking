@@ -15,9 +15,6 @@ window.map = (function () {
   pinMain.style.zIndex = 2;
 
   pinMain.addEventListener('mousedown', mouseDown);
-  area.addEventListener('mousemove', mouseMove);
-  area.addEventListener('mouseup', mouseUp);
-  area.addEventListener('mouseleave', mouseUp);
 
   address.addEventListener('input', function () {
     movePin();
@@ -35,9 +32,25 @@ window.map = (function () {
     }
   }
 
+  function getRangeValue(value, min, max) {
+    return Math.max(Math.min(value, max), min);
+  }
+
+  function attachEvents() {
+    area.addEventListener('mousemove', mouseMove);
+    area.addEventListener('mouseup', mouseUp);
+    area.addEventListener('mouseleave', mouseUp);
+  }
+
+  function detachEvents() {
+    area.removeEventListener('mousemove', mouseMove);
+    area.removeEventListener('mouseup', mouseUp);
+    area.removeEventListener('mouseleave', mouseUp);
+  }
+
   function mouseDown(evt) {
     evt.preventDefault();
-
+    attachEvents();
     startCoords = {
       x: evt.clientX,
       y: evt.clientY
@@ -47,11 +60,9 @@ window.map = (function () {
 
   function mouseMove(moveEvt) {
     moveEvt.preventDefault();
-
     if (!isMouseDown) {
       return false;
     }
-
     var shift = {
       x: startCoords.x - moveEvt.clientX,
       y: startCoords.y - moveEvt.clientY
@@ -62,20 +73,18 @@ window.map = (function () {
       y: moveEvt.clientY
     };
 
-    pinMainX = pinMainX - shift.x;
-    pinMainY = pinMainY - shift.y;
-    pinMainX = Math.min(pinMainX, areaRect.width);
-    pinMainX = Math.max(pinMainX, 0);
-    pinMainY = Math.min(pinMainY, areaRect.height);
-    pinMainY = Math.max(pinMainY, 0);
+    pinMainX = getRangeValue(pinMainX - shift.x, 0, areaRect.width);
+    pinMainY = getRangeValue(pinMainY - shift.y, 0, areaRect.height);
 
     setPinPosition(pinMainX, pinMainY);
-    address.value = 'x:' + pinMainX + ', y:' + pinMainY;
+
+    address.value = 'x:' + Math.round(pinMainX) + ', y:' + Math.round(pinMainY);
     return '';
   }
 
   function mouseUp(upEvt) {
     upEvt.preventDefault();
+    detachEvents();
     isMouseDown = false;
   }
 })();
