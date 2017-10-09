@@ -7,7 +7,6 @@ window.map = (function () {
   var areaRect = area.getBoundingClientRect();
   var pinRect = pinMain.getBoundingClientRect();
   var startCoords;
-  var isMouseDown = false;
   var pinMainX = areaRect.width / 2;
   var pinMainY = areaRect.height / 2;
 
@@ -55,14 +54,10 @@ window.map = (function () {
       x: evt.clientX,
       y: evt.clientY
     };
-    isMouseDown = true;
   }
 
   function mouseMove(moveEvt) {
     moveEvt.preventDefault();
-    if (!isMouseDown) {
-      return false;
-    }
     var shift = {
       x: startCoords.x - moveEvt.clientX,
       y: startCoords.y - moveEvt.clientY
@@ -85,6 +80,5 @@ window.map = (function () {
   function mouseUp(upEvt) {
     upEvt.preventDefault();
     detachEvents();
-    isMouseDown = false;
   }
 })();
