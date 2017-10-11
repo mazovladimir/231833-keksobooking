@@ -14,35 +14,33 @@
     3: ['1', '2', '3'],
     100: ['0']
   };
-  var TYPE_MAP = {
-    'bungalo': 0,
-    'flat': 1000,
-    'house': 5000,
-    'palace': 10000
-  };
 
-  selectRoomType();
   selectRoomCapacity();
 
   timeIn.addEventListener('change', function () {
-    window.synchronizeFields(timeIn, timeOut, ['12', '13', '14'], ['12', '13', '14'], syncValues);
+    window.synchronizeFields(timeIn, timeOut, ['12:00', '13:00', '14:00'], ['12:00', '13:00', '14:00'], syncValues);
+  });
+
+  timeOut.addEventListener('change', function () {
+    window.synchronizeFields(timeOut, timeIn, ['12:00', '13:00', '14:00'], ['12:00', '13:00', '14:00'], syncValues);
+  });
+
+  roomType.addEventListener('change', function () {
+    window.synchronizeFields(roomType, roomPrice, ['bungalo', 'flat', 'house', 'palace'], [0, 1000, 5000, 10000], syncValueWithMin);
+  });
+
+  roomNumber.addEventListener('change', function () {
+    selectRoomCapacity();
   });
 
   function syncValues(element, value) {
     element.value = value;
   }
 
-  timeOut.addEventListener('change', function () {
-    window.synchronizeFields(timeOut, timeIn, ['12', '13', '14'], ['12', '13', '14'], syncValues);
-  });
-
-  roomType.addEventListener('change', function () {
-    selectRoomType();
-  });
-
-  roomNumber.addEventListener('change', function () {
-    selectRoomCapacity();
-  });
+  function syncValueWithMin(element, value) {
+    element.min = value;
+    element.value = value;
+  }
 
   function selectRoomCapacity() {
     var numberSelected = roomNumber.options[roomNumber.selectedIndex];
@@ -61,17 +59,5 @@
         optionCapacity.selected = true;
       }
     }
-  }
-
-  function selectRoomType() {
-    var selectedType = roomType.options[roomType.selectedIndex];
-    if (selectedType.selected) {
-      setPriceType(TYPE_MAP[selectedType.value]);
-    }
-  }
-
-  function setPriceType(price) {
-    roomPrice.min = price;
-    roomPrice.value = price;
   }
 })();

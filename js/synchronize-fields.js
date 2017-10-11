@@ -2,8 +2,9 @@
 
 window.synchronizeFields = (function () {
   return function (firstField, secondField, firstFieldArray, secondFieldArray, syncFunction) {
+    var firstFieldIndex = firstFieldArray.indexOf(firstField.value);
     var element = secondField;
-    var value = secondField.options[firstField.selectedIndex].value;
+    var value = secondFieldArray[firstFieldIndex];
     syncFunction(element, value);
   };
 })();
