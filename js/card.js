@@ -6,7 +6,6 @@ window.card = (function () {
   var removePinActive = window.pin.removePinActive;
   var ESC_KEYCODE = 27;
   var dialogClose = dialog.querySelector('.dialog__close');
-  var dialogTitle = document.querySelector('.dialog__title');
 
   dialogClose.addEventListener('click', function () {
     closeDialog();
@@ -60,16 +59,10 @@ window.card = (function () {
     replaceAd.parentNode.replaceChild(renderAd(myAd), replaceAd);
   }
 
-  function changeDialog(targetPin, targetId) {
-    dialogTitle.querySelector('img').src = targetPin.src;
-    replacePinDialog(myAds[targetId]);
-  }
-
   replacePinDialog(myAds[0]);
 
   return {
     closeDialog: closeDialog,
     replacePinDialog: replacePinDialog,
-    changeDialog: changeDialog
   };
 }());
