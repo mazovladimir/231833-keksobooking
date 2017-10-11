@@ -22,16 +22,18 @@
   };
 
   selectRoomType();
-  selectRoomTimeIn();
-  selectRoomTimeOut();
   selectRoomCapacity();
 
   timeIn.addEventListener('change', function () {
-    selectRoomTimeIn();
+    window.synchronizeFields(timeIn, timeOut, ['12', '13', '14'], ['12', '13', '14'], syncValues);
   });
 
+  function syncValues(element, value) {
+    element.value = value;
+  }
+
   timeOut.addEventListener('change', function () {
-    selectRoomTimeOut();
+    window.synchronizeFields(timeOut, timeIn, ['12', '13', '14'], ['12', '13', '14'], syncValues);
   });
 
   roomType.addEventListener('change', function () {
@@ -57,24 +59,6 @@
       } else {
         optionCapacity.disabled = false;
         optionCapacity.selected = true;
-      }
-    }
-  }
-
-  function selectRoomTimeIn() {
-    var timeInSelected = timeIn.options[timeIn.selectedIndex].value;
-    for (var i = 0; i < timeOut.options.length; i++) {
-      if (timeInSelected === timeOut.options[i].value) {
-        timeOut.options[i].selected = true;
-      }
-    }
-  }
-
-  function selectRoomTimeOut() {
-    var timeOutSelected = timeOut.options[timeOut.selectedIndex].value;
-    for (var i = 0; i < timeIn.options.length; i++) {
-      if (timeOutSelected === timeIn.options[i].value) {
-        timeIn.options[i].selected = true;
       }
     }
   }
