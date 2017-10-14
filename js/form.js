@@ -17,9 +17,9 @@
 
   selectRoomCapacity();
 
-  timeIn.addEventListener('change', function () {
+  //timeIn.addEventListener('change', function () {
     window.synchronizeFields(timeIn, timeOut, ['12:00', '13:00', '14:00'], ['12:00', '13:00', '14:00'], syncValues);
-  });
+  //});
 
   timeOut.addEventListener('change', function () {
     window.synchronizeFields(timeOut, timeIn, ['12:00', '13:00', '14:00'], ['12:00', '13:00', '14:00'], syncValues);
