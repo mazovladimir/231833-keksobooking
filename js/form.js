@@ -17,17 +17,11 @@
 
   selectRoomCapacity();
 
-  //timeIn.addEventListener('change', function () {
-    window.synchronizeFields(timeIn, timeOut, ['12:00', '13:00', '14:00'], ['12:00', '13:00', '14:00'], syncValues);
-  //});
+  window.synchronizeFields(timeIn, timeOut, ['12:00', '13:00', '14:00'], ['12:00', '13:00', '14:00'], syncValues);
 
-  timeOut.addEventListener('change', function () {
-    window.synchronizeFields(timeOut, timeIn, ['12:00', '13:00', '14:00'], ['12:00', '13:00', '14:00'], syncValues);
-  });
+  window.synchronizeFields(timeOut, timeIn, ['12:00', '13:00', '14:00'], ['12:00', '13:00', '14:00'], syncValues);
 
-  roomType.addEventListener('change', function () {
-    window.synchronizeFields(roomType, roomPrice, ['bungalo', 'flat', 'house', 'palace'], [0, 1000, 5000, 10000], syncValueWithMin);
-  });
+  window.synchronizeFields(roomType, roomPrice, ['bungalo', 'flat', 'house', 'palace'], [0, 1000, 5000, 10000], syncValueWithMin);
 
   roomNumber.addEventListener('change', function () {
     selectRoomCapacity();
