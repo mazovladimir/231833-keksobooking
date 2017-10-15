@@ -14,33 +14,27 @@
     3: ['1', '2', '3'],
     100: ['0']
   };
-  var TYPE_MAP = {
-    'bungalo': 0,
-    'flat': 1000,
-    'house': 5000,
-    'palace': 10000
-  };
 
-  selectRoomType();
-  selectRoomTimeIn();
-  selectRoomTimeOut();
   selectRoomCapacity();
 
-  timeIn.addEventListener('change', function () {
-    selectRoomTimeIn();
-  });
+  window.synchronizeFields(timeIn, timeOut, ['12:00', '13:00', '14:00'], ['12:00', '13:00', '14:00'], syncValues);
 
-  timeOut.addEventListener('change', function () {
-    selectRoomTimeOut();
-  });
+  window.synchronizeFields(timeOut, timeIn, ['12:00', '13:00', '14:00'], ['12:00', '13:00', '14:00'], syncValues);
 
-  roomType.addEventListener('change', function () {
-    selectRoomType();
-  });
+  window.synchronizeFields(roomType, roomPrice, ['bungalo', 'flat', 'house', 'palace'], [0, 1000, 5000, 10000], syncValueWithMin);
 
   roomNumber.addEventListener('change', function () {
     selectRoomCapacity();
   });
+
+  function syncValues(element, value) {
+    element.value = value;
+  }
+
+  function syncValueWithMin(element, value) {
+    element.min = value;
+    element.value = value;
+  }
 
   function selectRoomCapacity() {
     var numberSelected = roomNumber.options[roomNumber.selectedIndex];
@@ -59,35 +53,5 @@
         optionCapacity.selected = true;
       }
     }
-  }
-
-  function selectRoomTimeIn() {
-    var timeInSelected = timeIn.options[timeIn.selectedIndex].value;
-    for (var i = 0; i < timeOut.options.length; i++) {
-      if (timeInSelected === timeOut.options[i].value) {
-        timeOut.options[i].selected = true;
-      }
-    }
-  }
-
-  function selectRoomTimeOut() {
-    var timeOutSelected = timeOut.options[timeOut.selectedIndex].value;
-    for (var i = 0; i < timeIn.options.length; i++) {
-      if (timeOutSelected === timeIn.options[i].value) {
-        timeIn.options[i].selected = true;
-      }
-    }
-  }
-
-  function selectRoomType() {
-    var selectedType = roomType.options[roomType.selectedIndex];
-    if (selectedType.selected) {
-      setPriceType(TYPE_MAP[selectedType.value]);
-    }
-  }
-
-  function setPriceType(price) {
-    roomPrice.min = price;
-    roomPrice.value = price;
   }
 })();

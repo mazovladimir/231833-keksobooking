@@ -58,7 +58,7 @@ window.pin = (function () {
       }
       myAds[targetId].isActive = true;
       pinNodes[targetId].classList.add('pin--active');
-      window.card.changeDialog(targetPin, targetId);
+      window.showCard(targetId);
     }
   }
 
