@@ -29,8 +29,8 @@
   });
 
   form.addEventListener('submit', function (evt) {
-    window.backend.save(new FormData(form), onLoad, onError);
     evt.preventDefault();
+    window.backend.save(new FormData(form), onLoad, onError);
   });
 
   function onLoad() {
