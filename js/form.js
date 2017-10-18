@@ -37,8 +37,8 @@
     form.reset();
   }
 
-  function onError() {
-
+  function onError(error) {
+    alert(error);
   }
 
   function syncValues(element, value) {
