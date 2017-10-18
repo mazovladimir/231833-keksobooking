@@ -1,7 +1,7 @@
 'use strict';
 
 window.backend = (function () {
-  var URL = 'https://1510.dump.academy/keksobookig';
+  var URL = 'https://1510.dump.academy/keksobooking';
 
   function save(data, onLoad, onError) {
     var xhr = new XMLHttpRequest();

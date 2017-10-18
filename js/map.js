@@ -25,6 +25,11 @@ window.map = (function () {
   }
 
   function movePin() {
+    if (!address.value.match(/x:\s*(\d+),\s*y:\s*(\d+)/)) {
+      address.value = ''; 
+      return;
+    }
+
     var parsedAddress = address.value.match(/x:\s*(\d+),\s*y:\s*(\d+)/);
     if (parsedAddress[1] && parsedAddress[2]) {
       setPinPosition(+parsedAddress[1], +parsedAddress[2]);

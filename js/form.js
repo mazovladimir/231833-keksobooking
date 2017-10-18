@@ -35,10 +35,11 @@
 
   function onLoad() {
     form.reset();
+    alert('Данные успешно отправлены');
   }
 
   function onError(error) {
-    alert(error);
+    alert('Произошла ошибка:' + error);
   }
 
   function syncValues(element, value) {
