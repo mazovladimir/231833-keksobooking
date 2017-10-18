@@ -13,6 +13,9 @@ window.map = (function () {
   setPinPosition(pinMainX, pinMainY);
   pinMain.style.zIndex = 2;
 
+  address.setAttribute('value', ('x:' + Math.round(pinMainX) + ', y:' + Math.round(pinMainY)));
+  address.readOnly = true;
+
   pinMain.addEventListener('mousedown', mouseDown);
 
   address.addEventListener('input', function () {
@@ -25,11 +28,6 @@ window.map = (function () {
   }
 
   function movePin() {
-    if (!address.value.match(/x:\s*(\d+),\s*y:\s*(\d+)/)) {
-      address.value = ''; 
-      return;
-    }
-
     var parsedAddress = address.value.match(/x:\s*(\d+),\s*y:\s*(\d+)/);
     if (parsedAddress[1] && parsedAddress[2]) {
       setPinPosition(+parsedAddress[1], +parsedAddress[2]);

@@ -22,6 +22,10 @@ window.backend = (function () {
     xhr.send(data);
   }
 
+  function load(onLoad, onError) {
+
+  }
+
   return {
     save: save
   };
