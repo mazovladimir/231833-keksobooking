@@ -7,6 +7,7 @@
   var roomPrice = document.querySelector('#price');
   var timeIn = document.querySelector('#timein');
   var timeOut = document.querySelector('#timeout');
+  var form = document.querySelector('.notice__form');
 
   var CAPACITY_MAP = {
     1: ['1'],
@@ -26,6 +27,19 @@
   roomNumber.addEventListener('change', function () {
     selectRoomCapacity();
   });
+
+  form.addEventListener('submit', function (evt) {
+    window.backend.save(new FormData(form), onLoad, onError);
+    evt.preventDefault();
+  });
+
+  function onLoad() {
+    form.reset();
+  }
+
+  function onError() {
+
+  }
 
   function syncValues(element, value) {
     element.value = value;
