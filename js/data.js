@@ -1,17 +1,24 @@
 'use strict';
 
 window.data = (function () {
-  var getRandomArray = window.util.getRandomArray;
-  var getRandom = window.util.getRandom;
-  var CHECKIN = ['12:00', '13:00', '14:00'];
-  var CHECKOUT = ['12:00', '13:00', '14:00'];
-  var FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
-  var TYPES = ['flat', 'house', 'bungalo'];
-  var TITLES = ['Большая уютная квартира', 'Маленькая неуютная квартира', 'Огромный прекрасный дворец', 'Маленький ужасный дворец', 'Красивый гостевой домик', 'Некрасивый негостеприимный домик', 'Уютное бунгало далеко от моря', 'Неуютное бунгало по колено в воде'];
+  //var getRandomArray = window.util.getRandomArray;
+  //var getRandom = window.util.getRandom;
+  //var CHECKIN = ['12:00', '13:00', '14:00'];
+  //var CHECKOUT = ['12:00', '13:00', '14:00'];
+  //var FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
+  //var TYPES = ['flat', 'house', 'bungalo'];
+  //var TITLES = ['Большая уютная квартира', 'Маленькая неуютная квартира', 'Огромный прекрасный дворец', 'Маленький ужасный дворец', 'Красивый гостевой домик', 'Некрасивый негостеприимный домик', 'Уютное бунгало далеко от моря', 'Неуютное бунгало по колено в воде'];
   var pinNodes = [];
   var dialog = document.querySelector('.dialog');
-  var myAds = createAds(8);
+  //var myAds = createAds(8);
+  var myAds;
 
+  function onLoad(data) {
+    myAds = data;
+  }
+
+  window.backend.load(onLoad);
+  /*
   function getAvatars() {
     var avatars = [];
     for (var avatarNumber = 1; avatarNumber < 9; avatarNumber++) {
@@ -54,9 +61,9 @@ window.data = (function () {
       photos: [],
     };
   }
-
+  */
   return {
-    Ad: Ad,
+    //Ad: Ad,
     pinNodes: pinNodes,
     dialog: dialog,
     myAds: myAds

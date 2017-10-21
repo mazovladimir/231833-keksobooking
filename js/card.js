@@ -65,4 +65,4 @@ window.card = (function () {
     closeDialog: closeDialog,
     replacePinDialog: replacePinDialog,
   };
-}());
+})();

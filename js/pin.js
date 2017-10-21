@@ -40,6 +40,8 @@ window.pin = (function () {
     return fragmentAd;
   }
 
+  window.backend.load(getAdFragment);
+
   function removePinActive() {
     var activeId = myAds.find(getActivePin).id;
     myAds[activeId].isActive = false;
