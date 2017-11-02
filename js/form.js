@@ -30,7 +30,7 @@
 
   form.addEventListener('submit', function (evt) {
     evt.preventDefault();
-    window.backend.save(new FormData(form), onLoad, onError);
+    window.backend.post('', new FormData(form), onLoad, onError);
   });
 
   function onLoad() {

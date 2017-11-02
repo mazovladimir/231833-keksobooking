@@ -11,13 +11,13 @@ window.data = (function () {
   var pinNodes = [];
   var dialog = document.querySelector('.dialog');
   //var myAds = createAds(8);
-  var myAds;
+  var myAds;  
+  window.backend.load(onLoad);
 
   function onLoad(data) {
     myAds = data;
   }
 
-  window.backend.load(onLoad);
   /*
   function getAvatars() {
     var avatars = [];
