@@ -2,10 +2,13 @@
 
 window.card = (function () {
   var dialog = window.data.dialog;
-  var myAds = window.data.myAds;
   var removePinActive = window.pin.removePinActive;
   var ESC_KEYCODE = 27;
   var dialogClose = dialog.querySelector('.dialog__close');
+
+  window.data.getAds(function(ads) {
+    replacePinDialog(ads[0]);
+  });
 
   dialogClose.addEventListener('click', function () {
     closeDialog();
@@ -58,8 +61,6 @@ window.card = (function () {
     var replaceAd = document.querySelector('.dialog__panel');
     replaceAd.parentNode.replaceChild(renderAd(myAd), replaceAd);
   }
-
-  replacePinDialog(myAds[0]);
 
   return {
     closeDialog: closeDialog,
