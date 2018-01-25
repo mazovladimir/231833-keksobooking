@@ -5,7 +5,61 @@ window.pin = (function () {
   var dialog = window.data.dialog;
   var pinNodes = [];
   var ENTER_KEYCODE = 13;
+  var filteredItems;
   var tokioPinMap = document.querySelector('.tokyo__pin-map');
+  var tokioFilterSet = document.querySelector('.tokyo__filter-set');
+  var housingType = document.querySelector('#housing_type');
+  var housingPrice = document.querySelector('#housing_price');
+  var housingRoomNumber = document.querySelector('#housing_room-number');
+  var housingGuestsNumber = document.querySelector('#housing_guests-number');
+ 
+  var filter = {
+    type: 'any',
+    price: 'medium',
+    rooms: 'any',
+    guests: 'any',
+    wifi: false,
+    dishwasher: false,
+    parking: false,
+    washer: false,
+    elevator: false,
+    conditioner: false
+  };
+    
+  tokioFilterSet.addEventListener('click', function (evt) {
+    var target = evt.target;
+    if (target['type'] === 'checkbox') {
+      filter[target.value] = target.checked;
+    }
+    console.log(filter);
+  })
+
+  housingType.addEventListener('change', function () {
+    setFilterSelect(housingType, 'type');
+    console.log(filter);
+  });
+
+  housingPrice.addEventListener('change', function () {
+    setFilterSelect(housingPrice, 'price');
+    console.log(filter);
+  });
+
+  housingRoomNumber.addEventListener('change', function () {
+    setFilterSelect(housingRoomNumber, 'rooms');
+    console.log(filter);
+  });
+
+  housingGuestsNumber.addEventListener('change', function () {
+    setFilterSelect(housingGuestsNumber, 'guests');
+    console.log(filter);
+  });
+
+  function setFilterSelect(filterSelect, filterProperty) {
+    var select = filterSelect.options[filterSelect.selectedIndex];
+    if (select.selected) {
+      filter[filterProperty] = select.value;
+    }
+  }
 
   window.data.getAds(function(ads) {
     myAds = ads;
