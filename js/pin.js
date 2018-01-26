@@ -6,6 +6,7 @@ window.pin = (function () {
   var pinNodes = [];
   var ENTER_KEYCODE = 13;
   var filteredItems;
+  var tokioFilters = document.querySelector('.tokyo__filters');
   var tokioPinMap = document.querySelector('.tokyo__pin-map');
   var tokioFilterSet = document.querySelector('.tokyo__filter-set');
   var housingType = document.querySelector('#housing_type');
