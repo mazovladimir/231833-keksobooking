@@ -13,6 +13,12 @@ window.pin = (function () {
   var housingPrice = document.querySelector('#housing_price');
   var housingRoomNumber = document.querySelector('#housing_room-number');
   var housingGuestsNumber = document.querySelector('#housing_guests-number');
+  var wifi = tokioFilterSet.querySelectorAll('input[type=checkbox]')[0];
+  var dishwasher = tokioFilterSet.querySelectorAll('input[type=checkbox]')[1];
+  var parking = tokioFilterSet.querySelectorAll('input[type=checkbox]')[2];
+  var washer = tokioFilterSet.querySelectorAll('input[type=checkbox]')[3];
+  var elevator = tokioFilterSet.querySelectorAll('input[type=checkbox]')[4];
+  var conditioner = tokioFilterSet.querySelectorAll('input[type=checkbox]')[5];
  
   var filter = {
     type: 'any',
