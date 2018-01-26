@@ -26,33 +26,30 @@ window.pin = (function () {
     conditioner: false
   };
     
-  tokioFilterSet.addEventListener('click', function (evt) {
+  tokioFilters.addEventListener('change', function (evt) {
     var target = evt.target;
-    if (target['type'] === 'checkbox') {
-      filter[target.value] = target.checked;
+    if (target.tagName === 'SELECT' || target.tagName === 'INPUT') {
+      passAllFilters();
     }
-    console.log(filter);
   })
 
-  housingType.addEventListener('change', function () {
+  function passAllFilters() {
     setFilterSelect(housingType, 'type');
-    console.log(filter);
-  });
-
-  housingPrice.addEventListener('change', function () {
     setFilterSelect(housingPrice, 'price');
-    console.log(filter);
-  });
-
-  housingRoomNumber.addEventListener('change', function () {
     setFilterSelect(housingRoomNumber, 'rooms');
-    console.log(filter);
-  });
-
-  housingGuestsNumber.addEventListener('change', function () {
     setFilterSelect(housingGuestsNumber, 'guests');
+    setFilterCheckBox(wifi);
+    setFilterCheckBox(dishwasher);
+    setFilterCheckBox(parking);
+    setFilterCheckBox(washer);
+    setFilterCheckBox(elevator);
+    setFilterCheckBox(conditioner);
     console.log(filter);
-  });
+  }
+
+  function setFilterCheckBox(property) {
+    filter[property.value] = property.checked;
+  }
 
   function setFilterSelect(filterSelect, filterProperty) {
     var select = filterSelect.options[filterSelect.selectedIndex];
