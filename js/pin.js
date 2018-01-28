@@ -5,7 +5,6 @@ window.pin = (function () {
   var dialog = window.data.dialog;
   var pinNodes = [];
   var ENTER_KEYCODE = 13;
-  var filteredItems;
   var tokioFilters = document.querySelector('.tokyo__filters');
   var tokioPinMap = document.querySelector('.tokyo__pin-map');
   var tokioFilterSet = document.querySelector('.tokyo__filter-set');
@@ -19,7 +18,9 @@ window.pin = (function () {
   var washer = tokioFilterSet.querySelectorAll('input[type=checkbox]')[3];
   var elevator = tokioFilterSet.querySelectorAll('input[type=checkbox]')[4];
   var conditioner = tokioFilterSet.querySelectorAll('input[type=checkbox]')[5];
- 
+  var selectFilters = ['type', 'price', 'rooms', 'guests'];
+  var checkboxFilters = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
+
   var filter = {
     type: 'any',
     price: 'medium',
@@ -32,7 +33,13 @@ window.pin = (function () {
     elevator: false,
     conditioner: false
   };
-    
+
+  var priceFilter = {
+    low: 10000,
+    middle: [10000, 50000],
+    high: 50000
+  }
+
   tokioFilters.addEventListener('change', function (evt) {
     var target = evt.target;
     if (target.tagName === 'SELECT' || target.tagName === 'INPUT') {
@@ -45,13 +52,38 @@ window.pin = (function () {
     setFilterSelect(housingPrice, 'price');
     setFilterSelect(housingRoomNumber, 'rooms');
     setFilterSelect(housingGuestsNumber, 'guests');
-    setFilterCheckBox(wifi);
-    setFilterCheckBox(dishwasher);
-    setFilterCheckBox(parking);
-    setFilterCheckBox(washer);
-    setFilterCheckBox(elevator);
-    setFilterCheckBox(conditioner);
-    console.log(filter);
+    [wifi, dishwasher, parking, washer, elevator, conditioner].forEach(function(checkboxNode) {
+      setFilterCheckBox(checkboxNode);
+    })
+    applyFilters();
+  }
+
+  function applyFilters() {
+    myAds.forEach(function(item) {
+      var itemCount = 0;
+      var anyCount = 0;
+      for (var prop in filter) {
+        if ((filter[prop] !== 'any') && (selectFilters.indexOf(prop) >= 0)) {
+          if (item.offer[prop] == filter[prop]) {
+            itemCount++;
+          }
+        } else if (filter[prop] === 'any') {
+          anyCount++;
+        }
+        if ((filter[prop] !== false) && (checkboxFilters.indexOf(prop) >= 0)) {
+          if (item.offer.features.indexOf(prop) >= 0) {
+            itemCount++;
+          }
+        } else if (filter[prop] === false) {
+          anyCount++;
+        }
+      }
+      if ((anyCount + itemCount) === Object.keys(filter).length) {
+        pinNodes[item.id].hidden = false;
+      } else {
+        pinNodes[item.id].hidden = true;
+      }
+    });
   }
 
   function setFilterCheckBox(property) {
