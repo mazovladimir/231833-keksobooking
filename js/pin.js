@@ -23,7 +23,7 @@ window.pin = (function () {
 
   var filter = {
     type: 'any',
-    price: 'medium',
+    price: 'middle',
     rooms: 'any',
     guests: 'any',
     wifi: false,
@@ -33,12 +33,6 @@ window.pin = (function () {
     elevator: false,
     conditioner: false
   };
-
-  var priceFilter = {
-    low: 10000,
-    middle: [10000, 50000],
-    high: 50000
-  }
 
   tokioFilters.addEventListener('change', function (evt) {
     var target = evt.target;
@@ -63,14 +57,16 @@ window.pin = (function () {
       var itemCount = 0;
       var anyCount = 0;
       for (var prop in filter) {
-        if ((filter[prop] !== 'any') && (selectFilters.indexOf(prop) >= 0)) {
-          if (item.offer[prop] == filter[prop]) {
+        if ((filter[prop] !== 'any') && (selectFilters.indexOf(prop) !== -1)) {
+          if ((prop === 'price') && (priceFilter(filter[prop], item.offer.price))) {
+              itemCount++;
+          } else if (item.offer[prop] == filter[prop]) {
             itemCount++;
           }
         } else if (filter[prop] === 'any') {
           anyCount++;
         }
-        if ((filter[prop] !== false) && (checkboxFilters.indexOf(prop) >= 0)) {
+        if ((filter[prop] !== false) && (checkboxFilters.indexOf(prop) !== -1)) {
           if (item.offer.features.indexOf(prop) >= 0) {
             itemCount++;
           }
@@ -84,6 +80,28 @@ window.pin = (function () {
         pinNodes[item.id].hidden = true;
       }
     });
+  }
+
+  function priceFilter(selectPrice, price) {
+    switch(selectPrice) {
+      case 'low':
+        if (price < 10000) {
+          return true;
+        }
+        break;
+      case 'middle':
+        if ((price > 10000) && (price < 50000)) {
+          return true;
+        }
+        break;
+      case 'high':
+        if (price >= 50000) {
+          return true;
+        }
+        break;
+      default:
+        return false;
+    }
   }
 
   function setFilterCheckBox(property) {
