@@ -118,7 +118,7 @@ window.pin = (function () {
   window.data.getAds(function(ads) {
     myAds = ads;
     document.querySelector('.dialog__title').querySelector('img').src = ads[0].author.avatar;
-    document.querySelector('.tokyo__pin-map').appendChild(getAdFragment(ads));
+    document.querySelector('.tokyo__pin-map').appendChild(getAdFragment(ads.slice(0, 5)));
   });
 
   tokioPinMap.addEventListener('click', function (evt) {
