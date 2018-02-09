@@ -6,7 +6,7 @@ window.card = (function () {
   var ESC_KEYCODE = 27;
   var dialogClose = dialog.querySelector('.dialog__close');
 
-  window.data.getAds(function(ads) {
+  window.data.getAds(function (ads) {
     replacePinDialog(ads[0]);
   });
 

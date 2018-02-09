@@ -24,7 +24,7 @@ window.backend = (function () {
     xhr.timeout = 10000; // 10s
 
     return xhr;
-  };
+  }
 
   function post(url, data, onLoad, onError) {
     var xhr = setup(onLoad, onError);

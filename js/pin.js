@@ -39,28 +39,28 @@ window.pin = (function () {
     if (target.tagName === 'SELECT' || target.tagName === 'INPUT') {
       passAllFilters();
     }
-  })
+  });
 
   function passAllFilters() {
     setFilterSelect(housingType, 'type');
     setFilterSelect(housingPrice, 'price');
     setFilterSelect(housingRoomNumber, 'rooms');
     setFilterSelect(housingGuestsNumber, 'guests');
-    [wifi, dishwasher, parking, washer, elevator, conditioner].forEach(function(checkboxNode) {
+    [wifi, dishwasher, parking, washer, elevator, conditioner].forEach(function (checkboxNode) {
       setFilterCheckBox(checkboxNode);
-    })
+    });
     applyFilters();
   }
 
   function applyFilters() {
-    myAds.forEach(function(item) {
+    myAds.forEach(function (item) {
       var itemCount = 0;
       var anyCount = 0;
       for (var prop in filter) {
         if ((filter[prop] !== 'any') && (selectFilters.indexOf(prop) !== -1)) {
           if ((prop === 'price') && (priceFilter(filter[prop], item.offer.price))) {
-              itemCount++;
-          } else if (item.offer[prop] == filter[prop]) {
+            itemCount++;
+          } else if (item.offer[prop].toString() === filter[prop].toString()) {
             itemCount++;
           }
         } else if (filter[prop] === 'any') {
@@ -83,14 +83,14 @@ window.pin = (function () {
   }
 
   function priceFilter(selectPrice, price) {
-    switch(selectPrice) {
+    switch (selectPrice) {
       case 'low':
         if (price < 10000) {
           return true;
         }
         break;
       case 'middle':
-        if ((price > 10000) && (price < 50000)) {
+        if ((price >= 10000) && (price < 50000)) {
           return true;
         }
         break;
@@ -102,6 +102,7 @@ window.pin = (function () {
       default:
         return false;
     }
+    return '';
   }
 
   function setFilterCheckBox(property) {
@@ -115,7 +116,7 @@ window.pin = (function () {
     }
   }
 
-  window.data.getAds(function(ads) {
+  window.data.getAds(function (ads) {
     myAds = ads;
     document.querySelector('.dialog__title').querySelector('img').src = ads[0].author.avatar;
     document.querySelector('.tokyo__pin-map').appendChild(getAdFragment(ads.slice(0, 5)));
@@ -157,7 +158,6 @@ window.pin = (function () {
   }
 
   function removePinActive() {
-    var activeIds = myAds.find(getActivePin);
     var activeId = myAds.find(getActivePin).id;
 
     myAds[activeId].isActive = false;
